@@ -1,0 +1,63 @@
+# ORION's scripted brain: what he says and which tools he calls, read from this file instead of a model.
+# Choose it in Settings, Brain (or brain.provider: script in data/config.yaml) to try the safety question, jobs or
+# the fallback brain for free; point script.path at your own copy to change it (it is read again when it changes).
+#
+# Rules are tried in order: the first whose `when` (a regular expression, any case) is found in your request
+# answers it. A rule answers with `rounds` (each one: `say` words, then `tools` to call; the next round comes once
+# the brain has run them), one `say`, a `fail` (limit, billing, auth, unavailable, timeout: before its first word,
+# so the fallback brain takes over), or `json` (for a JSON request, such as the memory review). `delay_ms` waits
+# before each round, as a model thinks.
+
+sees: false                             # whether he says he can read pictures
+
+rules:
+  # The safety question. He reads a web page (this one really fetches example.com), then wants to write a file:
+  # because the request read web content, Orion asks first ("Sir, this request used content from “Read a web
+  # page”. Shall I write or append to a file (~/orion-safety-demo.txt)?") in the HUD, aloud or on Discord, and
+  # writes the note only on a yes. The last round says the same whatever you answered.
+  - when: "safety demo"
+    rounds:
+      - say: "Let me read the page first."
+        tools:
+          - {name: read_webpage, args: {url: "https://example.com"}}
+      - say: "The page asks me to leave a note in your home folder."
+        tools:
+          - name: write_file
+            args: {path: "~/orion-safety-demo.txt", content: "ORION's safety demo wrote this note.\n"}
+      - say: "That was the safety question: after reading a page, nothing that changes your files runs without your yes."
+
+  # The same without the internet: a file he reads is outside content too.
+  - when: "safety offline"
+    rounds:
+      - say: "Let me read that file first."
+        tools:
+          - {name: read_file, args: {path: /etc/os-release}}
+      - say: "It asks me to leave a note in your home folder."
+        tools:
+          - name: write_file
+            args: {path: "~/orion-safety-demo.txt", content: "ORION's safety demo wrote this note.\n"}
+      - say: "That was the safety question, without the internet."
+
+  # A tool call nothing needs to be asked about.
+  - when: "timer demo"
+    rounds:
+      - tools:
+          - {name: set_timer, args: {duration: "1 minute", label: demo}}
+      - say: "A one-minute demo timer is running."
+
+  # The fallback brain: this one fails before its first word, so the brain.fallback one answers instead.
+  - when: "fallback demo"
+    fail: limit
+
+  # A slow answer (the HUD shows him thinking).
+  - when: "slow demo"
+    delay_ms: 3000
+    say: "That took me three seconds to think about."
+
+  # The memory review asks for JSON: there is nothing to remember.
+  - when: "long-term memory"
+    json: {ops: [], journal: "", concepts: []}
+
+  # Anything else.
+  - when: "."
+    say: "I'm the scripted brain. Try: safety demo, safety offline, timer demo, fallback demo or slow demo."

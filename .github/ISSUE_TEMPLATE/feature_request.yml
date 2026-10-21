@@ -1,0 +1,19 @@
+name: Feature request
+description: A tool, a connector, a gesture, a HUD change, a new kind of brain.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to do that you can't now?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like him to do?
+      description: If it gives him a new power, say what it should never be able to do (see docs/SECURITY.md).
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What have you tried instead?

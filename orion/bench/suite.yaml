@@ -1,0 +1,178 @@
+# ORION's built-in benchmark (orion/bench.py): requests over his own tools, asked of each brain in a dry run (no
+# tool really runs: each answers the case's result instead).
+#
+# A case: `say` (the request), `expect` (the calls a good brain makes: a tool, and the arguments that matter;
+# none for a request answered without a tool), `forbid` (tools it must not call), `max_rounds` (the most rounds a
+# good answer takes: a tool round and the answer is 2), `results` (what each tool answers).
+# Arguments are compared as the tool reads them: a number or yes/no equal; a choice (an enum) the same word; a length
+# of time ("5 minutes") the same seconds; other text found in what was given ("milk" in "Buy milk."). A list gives
+# the choices any of which will do, or, for a parameter that takes a list, the items it must hold.
+# A case whose expected tools this Orion doesn't have (no desktop, the documents not set up) is left out.
+
+defaults:
+  max_rounds: 2                         # a tool round, then the answer
+  result: "Done."                       # what a tool a case says nothing about answers
+
+cases:
+  # ── timers, reminders and to-dos ──
+  - say: "Set a timer for 5 minutes"
+    expect: [{tool: set_timer, args: {duration: "5 minutes"}}]
+    forbid: [set_reminder]
+    results: {set_timer: "Timer #1 started for 5 minutes."}
+  - say: "Start a 25 minute timer for my pomodoro"
+    expect: [{tool: set_timer, args: {duration: "25 minutes"}}]
+    forbid: [set_reminder]
+    results: {set_timer: "Timer #2 (pomodoro) started for 25 minutes."}
+  - say: "Remind me in 10 minutes to take the pizza out"
+    expect: [{tool: set_reminder, args: {message: pizza, when: "10 minutes"}}]
+    results: {set_reminder: "Reminder #3 set for today at 19:42 (in 10 minutes)."}
+  - say: "Remind me to call mum tomorrow at 9"
+    expect: [{tool: set_reminder, args: {message: [mum, mom]}}]
+    results: {set_reminder: "Reminder #4 set for Tuesday 13 October at 09:00 (tomorrow)."}
+  - say: "What timers and reminders do I have?"
+    expect: [{tool: list_reminders}]
+    results: {list_reminders: "#2 pomodoro timer: today at 19:57 (in 24 minutes)\n#4 reminder \"call mum\": Tuesday 13 October at 09:00"}
+  - say: "Cancel the pasta timer"
+    expect: [{tool: cancel_timer_or_reminder, args: {which: pasta}}]
+    results: {cancel_timer_or_reminder: "Cancelled #5 pasta timer."}
+  - say: "Add milk to my to-do list"
+    expect: [{tool: todo, args: {action: add, item: milk}}]
+    results: {todo: "Added to-do #7: milk"}
+  - say: "What's on my to-do list?"
+    expect: [{tool: todo, args: {action: list}}]
+    results: {todo: "#6: renew the passport\n#7: milk"}
+
+  # ── weather, news and the web ──
+  - say: "What's the weather like today?"
+    expect: [{tool: get_weather}]
+    forbid: [web_search]
+    results: {get_weather: "Athens, Greece now: 22°C, clear sky, wind 9 km/h.\nToday: 14 to 24°C, sunny."}
+  - say: "Will it rain in London tomorrow?"
+    expect: [{tool: get_weather, args: {location: london}}]
+    forbid: [web_search]
+    results: {get_weather: "London, United Kingdom tomorrow: 11 to 16°C, light rain from 14:00 (80% chance)."}
+  - say: "Search the web for the best budget mechanical keyboard"
+    expect: [{tool: web_search, args: {query: keyboard}}]
+    results: {web_search: "1. The best budget mechanical keyboards of 2026 (rtings.com): the Keychron C3 Pro leads at $40...\n2. Budget mechanical keyboards tested (tomshardware.com): Redragon K552..."}
+  - say: "What's in the news today?"
+    expect: [{tool: get_news}]
+    forbid: [web_search]
+    results: {get_news: "1. Markets steady as central banks hold rates (Reuters)\n2. New Artemis launch date set (BBC)\n3. Storm warning for the Aegean (Kathimerini)"}
+  - say: "Read this page for me: https://example.com/article"
+    expect: [{tool: read_webpage, args: {url: example.com/article}}]
+    results: {read_webpage: "Example Domain. This domain is for use in illustrative examples in documents."}
+
+  # ── memory and notes ──
+  - say: "Remember that my sister's name is Maya"
+    expect: [{tool: memory, args: {action: add, target: user, text: maya}}]
+    results: {memory: "Saved to USER.md as [#3fa2]."}
+  - say: "What did we talk about yesterday?"
+    expect: [{tool: memory_search}]
+    results: {memory_search: "[journal 2026-10-11] The user asked how to set up Tailscale on a Raspberry Pi; Orion found the official guide."}
+  - say: "Save a note: the spare key is under the blue pot"
+    expect: [{tool: notes, args: {action: save, text: blue pot}}]
+    results: {notes: "Saved the note “Spare key”."}
+
+  # ── music and sound ──
+  - say: "Pause the music"
+    expect: [{tool: media, args: {action: [pause, play_pause]}}]
+    results: {media: "spotify: Paused, Clair de Lune by Claude Debussy."}
+  - say: "Skip to the next song"
+    expect: [{tool: media, args: {action: next}}]
+    results: {media: "spotify: Playing, Gymnopédie No. 1 by Erik Satie."}
+  - say: "Turn the volume down a bit"
+    expect: [{tool: volume, args: {action: down}}]
+    results: {volume: "Volume is 40%."}
+  - say: "Set the volume to 40 percent"
+    expect: [{tool: volume, args: {action: set, level: 40}}]
+    results: {volume: "Volume is 40%."}
+  - say: "Mute the sound"
+    expect: [{tool: volume, args: {action: mute}}]
+    forbid: [microphone]
+    results: {volume: "Volume is 40% (muted)."}
+
+  # ── this PC ──
+  - say: "Open Firefox"
+    expect: [{tool: open, args: {target: firefox}}]
+    results: {open: "Launched Firefox Web Browser."}
+  - say: "Open youtube.com"
+    expect: [{tool: open, args: {target: youtube}}]
+    results: {open: "Opened https://youtube.com in the browser."}
+  - say: "Close Spotify"
+    expect: [{tool: close_app, args: {name: spotify}}]
+    results: {close_app: "Closed 3 process(es) of spotify."}
+  - say: "Find my PDF invoices"
+    expect: [{tool: find_files}]
+    results: {find_files: "/home/you/Documents/invoices/2026-09.pdf\n/home/you/Documents/invoices/2026-08.pdf"}
+  - say: "How is the PC doing?"
+    expect: [{tool: system_status}]
+    forbid: [run_command]
+    results: {system_status: "CPU 12% at 48°C; RAM 9.1 of 31.2 GB; disk 61% full (380 GB free); up 3 h 12 min."}
+  - say: "What's using all my memory?"
+    expect: [{tool: top_processes, args: {sort_by: memory}}]
+    forbid: [run_command]
+    results: {top_processes: "firefox: CPU 3.1%, memory 2.40 GB\ncode: CPU 1.2%, memory 1.10 GB\nollama: CPU 0.0%, memory 0.90 GB"}
+  - say: "How much disk space is left?"
+    expect: [{tool: storage_report}]
+    forbid: [run_command]
+    results: {storage_report: "Disk 61% full: 380 GB free of 1000 GB. Downloads 12.4 GB, the trash 0.3 GB, caches 5.1 GB."}
+  - say: "Lock the screen"
+    expect: [{tool: lock_screen}]
+    forbid: [power]
+    results: {lock_screen: "Screen locked."}
+  - say: "Put the computer to sleep"
+    expect: [{tool: power, args: {action: suspend}}]
+    forbid: [run_command]
+    results: {power: "Suspend in 3 seconds."}
+
+  # ── the calendar and jobs ──
+  - say: "What's on my calendar tomorrow?"
+    expect: [{tool: calendar_agenda}]
+    results: {calendar_agenda: "Tuesday 13 October: 10:00-11:00 Team standup; 18:30 Dinner with Maya."}
+  - say: "Add a dentist appointment on Friday at 3 pm"
+    expect: [{tool: calendar_add, args: {title: dentist}}]
+    results: {calendar_add: "Added “Dentist” on Friday 16 October, 15:00-16:00, to the personal calendar."}
+  - say: "Every weekday at 7:30 give me a morning briefing"
+    expect: [{tool: job_create, args: {schedule: ["30 7 * * 1-5", "30 07 * * 1-5", "30 7 * * mon-fri"]}}]
+    results: {job_create: "Scheduled #1 Morning briefing: At 07:30 on Monday through Friday (30 7 * * 1-5), on; never ran yet."}
+  - say: "What scheduled jobs do I have?"
+    expect: [{tool: job_list}]
+    results: {job_list: "#1 Morning briefing: At 07:30 on Monday through Friday (30 7 * * 1-5), on; last run ok."}
+
+  # ── his own controls ──
+  - say: "Put the weather panel on the screen"
+    expect: [{tool: hud_show, args: {parts: [weather]}}]
+    results: {hud_show: "On the screen: weather."}
+  - say: "Stop speaking your replies, just show them on screen"
+    expect: [{tool: spoken_replies, args: {"on": false}}]   # quoted: YAML reads a bare on as true
+    results: {spoken_replies: "Spoken replies are off: replies are only written in the HUD."}
+  - say: "Restart yourself"
+    expect: [{tool: orion_restart}]
+    forbid: [power]
+    results: {orion_restart: "Orion restarts after this answer."}
+
+  # ── your documents (the Documents connector) ──
+  - say: "Search my documents for the lease agreement"
+    expect: [{tool: documents_search, args: {query: lease}}]
+    results: {documents_search: "1. Contracts/Lease 2025.pdf § Term: The lease runs from 1 March 2025 to 28 February 2027..."}
+  - say: "Which folders of documents do you search?"
+    expect: [{tool: documents_status}]
+    results: {documents_status: "~/Documents: 412 files, 9,850 passages, up to date."}
+
+  # ── answered without a tool ──
+  - say: "Tell me a joke"
+    max_rounds: 1
+    forbid: [web_search]
+  - say: "What time is it?"
+    max_rounds: 1
+    forbid: [run_command]
+
+  # ── two steps ──
+  - say: "Check the weather in Paris, and if it's going to rain, remind me to take an umbrella at 8 am"
+    expect:
+      - {tool: get_weather, args: {location: paris}}
+      - {tool: set_reminder, args: {message: umbrella}}
+    max_rounds: 3
+    results:
+      get_weather: "Paris, France tomorrow: 9 to 14°C, rain all day (90% chance)."
+      set_reminder: "Reminder #8 set for Tuesday 13 October at 08:00 (tomorrow)."

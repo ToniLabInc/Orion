@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1434" viewBox="0 0 1600 1434" role="img" aria-labelledby="title desc" font-family="Geist, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif">
+  <title id="title">ORION at a glance</title>
+  <desc id="desc">ORION's architecture in one picture. On the left, the devices you meet him on: this machine's microphone, speakers and desktop; the HUD in a browser on a laptop, phone or tablet, which can carry his voice, share a screen or camera and lend its clipboard; other AI apps; Discord; and the HandTracking camera on a Raspberry Pi. In the centre, ORION, one Python process: the VoiceSession, the HUD server with its Surfaces, the IntentRunner, scheduled Jobs and the Watchers bring requests and announcements to the TurnRunner; the Brain prepares each turn with the Memory and calls on two things: the MCP hub, which every tool call goes through (it hides what this machine can't run, asks the Confirmer before a risky call after web content, marks tainted turns, traces every call and sizes pictures down), and the FallbackLLM, which thinks. On the right, the tools: in Orion's process, in his tools process, and external MCP servers. At the bottom, the storage in data/ (the Markdown memory, SQLite, skills, models, config.yaml) and the brains (your Claude plan through Claude Code, OpenRouter, Ollama).</desc>
+  <style>
+    .cm{font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace;font-weight:450}
+    .b{font-weight:600}
+    .eyebrow{font-size:13px;fill:#99dbfe;font-weight:600;letter-spacing:0.32em}
+    .title{font-size:34px;fill:#f4f7fb;font-weight:600;letter-spacing:-0.01em}
+    .subtitle{font-size:16.5px;fill:#b1b8c2}
+    .colhead{font-size:13px;fill:#b1b8c2;font-weight:600;letter-spacing:0.2em}
+    .name{font-size:16px;fill:#f4f7fb;font-weight:600}
+    .big{font-size:19px;fill:#f4f7fb;font-weight:600}
+    .body{font-size:14px;fill:#cfd5dc}
+    .bodyb{font-size:14px;fill:#e6eaf0;font-weight:600}
+    .small{font-size:13px;fill:#b1b8c2}
+    .smallb{font-size:13px;fill:#cfd5dc;font-weight:600}
+    .muted{font-size:13px;fill:#8f98a3}
+    .tag{font-size:13px;fill:#8f98a3;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .code{font-size:13px;fill:#cfd5dc;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .chip{font-size:13px;fill:#e6eaf0;font-weight:500}
+    .chipm{font-size:13px;fill:#e6eaf0;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .num{font-size:13px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .numbig{font-size:17px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .foot{font-size:13px;fill:#8f98a3;font-weight:500;letter-spacing:0.16em}
+    .legend{font-size:13px;fill:#b1b8c2}
+    .arrowlabel{font-size:13px;fill:#b1b8c2;font-weight:500}
+    .ln{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090e1c"/><stop offset="0.55" stop-color="#060c19"/>
+      <stop offset="1" stop-color="#02040c"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#6dcaf8" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#6dcaf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121b2c" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#0b1423" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18233a" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#111a2c" stop-opacity="0.97"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ah-alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ff5251"/>
+    </marker>
+    <marker id="ah-aurora" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#45e2d2"/>
+    </marker>
+    <marker id="ah-betel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ff893b"/>
+    </marker>
+    <marker id="ah-dusk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ebbd57"/>
+    </marker>
+    <marker id="ah-nebula" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#cc70f2"/>
+    </marker>
+    <marker id="ah-rigel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#6dcaf8"/>
+    </marker>
+  </defs>
+
+  <!-- deep space -->
+  <rect width="1600" height="1434" fill="url(#space)"/>
+  <g fill="#dfe8ff">
+    <circle cx="724.6" cy="801.8" r="0.9" fill-opacity="0.26"/>
+    <circle cx="1362.4" cy="277.3" r="1.1" fill-opacity="0.26"/>
+    <circle cx="980.5" cy="272" r="0.9" fill-opacity="0.21"/>
+    <circle cx="151.6" cy="1156.1" r="0.6" fill-opacity="0.30"/>
+    <circle cx="635.5" cy="650.3" r="1.1" fill-opacity="0.32"/>
+    <circle cx="995" cy="1187.4" r="0.6" fill-opacity="0.14"/>
+    <circle cx="309.3" cy="351.1" r="0.6" fill-opacity="0.35"/>
+    <circle cx="524.8" cy="846" r="0.7" fill-opacity="0.28"/>
+    <circle cx="1022.2" cy="716.7" r="0.6" fill-opacity="0.26"/>
+    <circle cx="448.6" cy="1422.7" r="0.6" fill-opacity="0.33"/>
+    <circle cx="507.4" cy="333.7" r="0.8" fill-opacity="0.13"/>
+    <circle cx="900" cy="161" r="0.6" fill-opacity="0.37"/>
+    <circle cx="620.2" cy="1366.5" r="0.6" fill-opacity="0.18"/>
+    <circle cx="1476.4" cy="82.2" r="0.9" fill-opacity="0.41"/>
+    <circle cx="637.5" cy="111.6" r="0.7" fill-opacity="0.35"/>
+    <circle cx="435.3" cy="131.6" r="0.8" fill-opacity="0.12"/>
+    <circle cx="657.5" cy="1316.6" r="0.7" fill-opacity="0.19"/>
+    <circle cx="168.1" cy="92.9" r="0.9" fill-opacity="0.17"/>
+    <circle cx="893.9" cy="642.4" r="0.7" fill-opacity="0.42"/>
+    <circle cx="1226.9" cy="602.5" r="0.9" fill-opacity="0.15"/>
+    <circle cx="674.5" cy="309.8" r="0.8" fill-opacity="0.38"/>
+    <circle cx="1552.2" cy="848.5" r="0.6" fill-opacity="0.18"/>
+    <circle cx="632.5" cy="1219.5" r="1.1" fill-opacity="0.15"/>
+    <circle cx="1575.1" cy="310.4" r="0.8" fill-opacity="0.12"/>
+    <circle cx="974.8" cy="1185.4" r="0.9" fill-opacity="0.14"/>
+    <circle cx="150.7" cy="834.3" r="0.7" fill-opacity="0.12"/>
+    <circle cx="592" cy="890.2" r="0.7" fill-opacity="0.41"/>
+    <circle cx="774.2" cy="822.7" r="0.9" fill-opacity="0.17"/>
+    <circle cx="252.2" cy="1296.1" r="1.1" fill-opacity="0.19"/>
+    <circle cx="308.6" cy="1056.5" r="1.1" fill-opacity="0.18"/>
+    <circle cx="1513" cy="1258.9" r="1.1" fill-opacity="0.14"/>
+    <circle cx="83.1" cy="162.6" r="1.1" fill-opacity="0.41"/>
+    <circle cx="385.6" cy="1007.1" r="0.8" fill-opacity="0.25"/>
+    <circle cx="1441.2" cy="704.2" r="1.1" fill-opacity="0.17"/>
+    <circle cx="1149" cy="105.5" r="0.7" fill-opacity="0.26"/>
+    <circle cx="1043.2" cy="881.3" r="0.6" fill-opacity="0.20"/>
+    <circle cx="1461.1" cy="297.2" r="0.6" fill-opacity="0.14"/>
+    <circle cx="659.7" cy="361.2" r="0.6" fill-opacity="0.17"/>
+    <circle cx="592.2" cy="819.3" r="0.7" fill-opacity="0.15"/>
+    <circle cx="227.2" cy="646.6" r="0.8" fill-opacity="0.32"/>
+    <circle cx="1102.9" cy="836.7" r="0.7" fill-opacity="0.30"/>
+    <circle cx="1471" cy="681.3" r="0.8" fill-opacity="0.33"/>
+    <circle cx="1533" cy="38.1" r="0.6" fill-opacity="0.26"/>
+    <circle cx="1165.1" cy="460.2" r="0.6" fill-opacity="0.14"/>
+    <circle cx="873" cy="1053.1" r="0.7" fill-opacity="0.36"/>
+    <circle cx="1457.4" cy="506.9" r="0.9" fill-opacity="0.39"/>
+    <circle cx="1387.8" cy="599.5" r="0.6" fill-opacity="0.38"/>
+    <circle cx="915.3" cy="894.2" r="0.9" fill-opacity="0.23"/>
+    <circle cx="27.7" cy="110.4" r="0.6" fill-opacity="0.31"/>
+    <circle cx="1581.4" cy="1255.5" r="0.8" fill-opacity="0.24"/>
+    <circle cx="1172.3" cy="831.8" r="0.9" fill-opacity="0.26"/>
+    <circle cx="865.3" cy="743.5" r="1.1" fill-opacity="0.13"/>
+    <circle cx="960.4" cy="690" r="0.7" fill-opacity="0.41"/>
+    <circle cx="186.8" cy="1114" r="0.9" fill-opacity="0.20"/>
+    <circle cx="25.9" cy="434.9" r="1.1" fill-opacity="0.18"/>
+    <circle cx="276.7" cy="1292.3" r="0.9" fill-opacity="0.27"/>
+    <circle cx="390.5" cy="581.9" r="0.8" fill-opacity="0.18"/>
+    <circle cx="690.5" cy="1150.9" r="0.7" fill-opacity="0.38"/>
+    <circle cx="616.9" cy="834.8" r="0.8" fill-opacity="0.18"/>
+    <circle cx="221.1" cy="505.4" r="0.6" fill-opacity="0.33"/>
+    <circle cx="1512.8" cy="400.5" r="0.7" fill-opacity="0.15"/>
+    <circle cx="754.6" cy="1320.7" r="0.9" fill-opacity="0.23"/>
+    <circle cx="831.6" cy="961.1" r="1.1" fill-opacity="0.26"/>
+    <circle cx="126.3" cy="52.6" r="1.1" fill-opacity="0.13"/>
+    <circle cx="1130.5" cy="817.1" r="0.8" fill-opacity="0.31"/>
+    <circle cx="901.4" cy="916.9" r="0.9" fill-opacity="0.26"/>
+    <circle cx="47.2" cy="1184.5" r="0.7" fill-opacity="0.35"/>
+    <circle cx="1270.2" cy="1403.3" r="0.6" fill-opacity="0.25"/>
+    <circle cx="1005.9" cy="936.9" r="0.8" fill-opacity="0.41"/>
+    <circle cx="1092.2" cy="290.7" r="0.9" fill-opacity="0.20"/>
+    <circle cx="1139.3" cy="1078.7" r="1.1" fill-opacity="0.33"/>
+    <circle cx="291.7" cy="394.2" r="0.8" fill-opacity="0.28"/>
+    <circle cx="1507.8" cy="717.6" r="0.7" fill-opacity="0.24"/>
+    <circle cx="1262.4" cy="1293" r="0.6" fill-opacity="0.24"/>
+    <circle cx="1422" cy="558.1" r="0.9" fill-opacity="0.26"/>
+    <circle cx="998.9" cy="1298.3" r="0.9" fill-opacity="0.29"/>
+    <circle cx="1041.8" cy="720.8" r="0.8" fill-opacity="0.26"/>
+    <circle cx="1039.7" cy="298.5" r="0.6" fill-opacity="0.18"/>
+    <circle cx="1433.6" cy="1398.3" r="0.8" fill-opacity="0.28"/>
+    <circle cx="1260.6" cy="462.3" r="0.6" fill-opacity="0.22"/>
+  </g>
+
+  <!-- title -->
+  <text x="48" y="66" class="eyebrow">ORION  ·  ARCHITECTURE  ·  1 OF 4</text>
+  <text x="48" y="110" class="title">ORION at a glance</text>
+  <text x="48" y="142" class="subtitle">One Python process on your machine: your devices lend him a microphone, speakers and a screen, a language model thinks, and every tool call goes through the MCP hub.</text>
+
+  <!-- ORION: one Python process -->
+  <rect x="348" y="172" width="904" height="857" rx="22" fill="url(#panel)" stroke="#6dcaf8" stroke-opacity="0.31"/>
+  <rect x="370" y="172.5" width="860" height="1" fill="url(#rim)"/>
+  <circle cx="372" cy="199.5" r="4" fill="#6dcaf8"/>
+  <text x="384" y="204" class="colhead" style="fill:#99dbfe">ORION  ·  ONE PYTHON PROCESS</text>
+  <text x="1232" y="204" class="tag" text-anchor="end" style="fill:#99dbfe">orion/runtime.py</text>
+  <text x="368" y="230" class="small" style="fill:#8f98a3">The Runtime builds every part, applies settings live and runs the background loops.</text>
+
+  <!-- column A: ways in -->
+  <rect x="368" y="252" width="256" height="110" rx="14" fill="url(#card)" stroke="#45e2d2" stroke-opacity="0.34"/>
+  <rect x="382" y="252.5" width="228" height="1" fill="url(#rim)"/>
+  <text x="384" y="280" class="name">VoiceSession</text>
+  <text x="608" y="280" class="tag" text-anchor="end" style="fill:#8bf0e3">voice/</text>
+  <text x="384" y="304" class="body">Wake word, Whisper ears,</text>
+  <text x="384" y="324" class="body">Kokoro voice. One device at a</text>
+  <text x="384" y="344" class="body">time holds the voice.</text>
+  <rect x="368" y="376" width="256" height="264" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="382" y="376.5" width="228" height="1" fill="url(#rim)"/>
+  <text x="384" y="404" class="name">HUD server</text>
+  <text x="608" y="404" class="tag" text-anchor="end" style="fill:#99dbfe">server.py</text>
+  <text x="384" y="428" class="body"><tspan class="cm">/ws</tspan> events and audio frames</text>
+  <text x="384" y="448" class="body">REST <tspan class="cm">/api</tspan> for the HUD's pages</text>
+  <text x="384" y="468" class="body"><tspan class="cm">/mcp</tspan> for other AI apps</text>
+  <text x="384" y="488" class="body">pairing for other devices</text>
+  <rect x="368" y="654" width="256" height="90" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="382" y="654.5" width="228" height="1" fill="url(#rim)"/>
+  <text x="384" y="682" class="name">IntentRunner</text>
+  <text x="608" y="682" class="tag" text-anchor="end" style="fill:#99dbfe">intents.py</text>
+  <text x="384" y="706" class="body">Gestures and Discord messages</text>
+  <text x="384" y="726" class="body">that servers push.</text>
+  <rect x="368" y="758" width="256" height="90" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="382" y="758.5" width="228" height="1" fill="url(#rim)"/>
+  <text x="384" y="786" class="name">Jobs · JobRunner</text>
+  <text x="608" y="786" class="tag" text-anchor="end" style="fill:#99dbfe">jobs.py</text>
+  <text x="384" y="810" class="body">Requests on a schedule, run on</text>
+  <text x="384" y="830" class="body">their own model.</text>
+  <rect x="368" y="862" width="256" height="90" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="382" y="862.5" width="228" height="1" fill="url(#rim)"/>
+  <text x="384" y="890" class="name">Watchers</text>
+  <text x="608" y="890" class="tag" text-anchor="end" style="fill:#99dbfe">watchers.py</text>
+  <text x="384" y="914" class="body">Battery, heat, disk and memory:</text>
+  <text x="384" y="934" class="body">he speaks up when needed.</text>
+  <path class="ln" d="M384 502L608 502" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="384" y="528" class="bodyb">Surfaces</text>
+  <text x="608" y="528" class="tag" text-anchor="end" style="fill:#ffa873">surfaces.py</text>
+  <text x="384" y="548" class="small" style="fill:#8f98a3">what each HUD connected offers</text>
+  <rect x="384" y="560" width="43.5" height="26" rx="13" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.42"/>
+  <text x="394" y="577.6" class="chip" style="fill:#fec6a8">mic</text>
+  <rect x="435.5" y="560" width="73.3" height="26" rx="13" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.42"/>
+  <text x="445.5" y="577.6" class="chip" style="fill:#fec6a8">speaker</text>
+  <rect x="516.7" y="560" width="64.6" height="26" rx="13" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.42"/>
+  <text x="526.7" y="577.6" class="chip" style="fill:#fec6a8">screen</text>
+  <rect x="384" y="594" width="68.9" height="26" rx="13" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.42"/>
+  <text x="394" y="611.6" class="chip" style="fill:#fec6a8">camera</text>
+  <rect x="460.9" y="594" width="81.6" height="26" rx="13" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.42"/>
+  <text x="470.9" y="611.6" class="chip" style="fill:#fec6a8">clipboard</text>
+
+  <!-- column B: thinking -->
+  <rect x="656" y="252" width="244" height="130" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="670" y="252.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="672" y="280" class="name">TurnRunner</text>
+  <text x="884" y="280" class="tag" text-anchor="end" style="fill:#99dbfe">brain/</text>
+  <text x="672" y="304" class="body">One turn at a time, from the</text>
+  <text x="672" y="324" class="body">voice, the HUD or Discord. A</text>
+  <text x="672" y="344" class="body">summons (“show me the</text>
+  <text x="672" y="364" class="body">weather”) needs no model.</text>
+  <rect x="656" y="492" width="244" height="208" rx="14" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.44"/>
+  <rect x="670" y="492.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="672" y="520" class="name">Brain</text>
+  <text x="884" y="520" class="tag" text-anchor="end" style="fill:#d592f2">brain/</text>
+  <text x="672" y="544" class="small" style="fill:#b1b8c2">The agent loop, each turn:</text>
+  <circle cx="677" cy="569" r="4" fill="#cc70f2"/>
+  <path class="ln" d="M677 575L677 589" stroke="#cc70f2" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="692" y="573.6" class="small" style="fill:#cfd5dc"><tspan class="b">embed</tspan>  the request, once</text>
+  <circle cx="677" cy="595" r="4" fill="#cc70f2"/>
+  <path class="ln" d="M677 601L677 615" stroke="#cc70f2" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="692" y="599.6" class="small" style="fill:#cfd5dc"><tspan class="b">skills</tspan>  by name or meaning</text>
+  <circle cx="677" cy="621" r="4" fill="#cc70f2"/>
+  <path class="ln" d="M677 627L677 641" stroke="#cc70f2" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="692" y="625.6" class="small" style="fill:#cfd5dc"><tspan class="b">recall</tspan>  0 to 3 memories</text>
+  <circle cx="677" cy="647" r="4" fill="#cc70f2"/>
+  <path class="ln" d="M677 653L677 667" stroke="#cc70f2" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="692" y="651.6" class="small" style="fill:#cfd5dc"><tspan class="b">route</tspan>  the tools to show</text>
+  <circle cx="677" cy="673" r="4" fill="#cc70f2"/>
+  <text x="692" y="677.6" class="small" style="fill:#cfd5dc"><tspan class="b">rounds</tspan>  until it answers</text>
+  <rect x="656" y="810" width="244" height="110" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.34"/>
+  <rect x="670" y="810.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="672" y="838" class="name">Memory</text>
+  <text x="884" y="838" class="tag" text-anchor="end" style="fill:#f5d38c">memory/</text>
+  <text x="672" y="862" class="body">Recall before each reply; once</text>
+  <text x="672" y="882" class="body">a conversation goes quiet, the</text>
+  <text x="672" y="902" class="body">review keeps what matters.</text>
+
+  <!-- column C: the MCP hub (every tool call goes through it), the Confirmer, the FallbackLLM -->
+  <rect x="932" y="252" width="300" height="455" rx="18" fill="none" stroke="#6dcaf8" stroke-opacity="0.55" stroke-width="5" filter="url(#glow)"/>
+  <rect x="932" y="252" width="300" height="455" rx="18" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.58"/>
+  <rect x="950" y="252.5" width="264" height="1" fill="url(#rim)"/>
+  <text x="948" y="284" class="big" style="fill:#c5ebff">MCP hub</text>
+  <text x="1216" y="283" class="tag" text-anchor="end" style="fill:#99dbfe">mcp.py</text>
+  <text x="948" y="309" class="body" style="fill:#e6eaf0">Every tool call goes through it,</text>
+  <text x="948" y="329" class="small">from the brain, the HUD, gestures, jobs</text>
+  <text x="948" y="348" class="small">and other AI apps:</text>
+  <circle cx="959" cy="372" r="10" fill="#6dcaf8"/>
+  <text x="959" y="376.6" class="num" text-anchor="middle">1</text>
+  <text x="982" y="377" class="small" style="fill:#cfd5dc"><tspan class="b">requires</tspan>  tools this machine can't</text>
+  <text x="982" y="396" class="small" style="fill:#cfd5dc">run are hidden (host profile)</text>
+  <circle cx="959" cy="423" r="10" fill="#6dcaf8"/>
+  <text x="959" y="427.6" class="num" text-anchor="middle">2</text>
+  <text x="982" y="428" class="small" style="fill:#cfd5dc"><tspan class="b">confirm</tspan>  a risky call after web</text>
+  <text x="982" y="447" class="small" style="fill:#cfd5dc">content waits for your yes</text>
+  <circle cx="959" cy="474" r="10" fill="#6dcaf8"/>
+  <text x="959" y="478.6" class="num" text-anchor="middle">3</text>
+  <text x="982" y="479" class="small" style="fill:#cfd5dc"><tspan class="b">taint</tspan>  web or app content marks the</text>
+  <text x="982" y="498" class="small" style="fill:#cfd5dc">turn; provenance rides along</text>
+  <circle cx="959" cy="525" r="10" fill="#6dcaf8"/>
+  <text x="959" y="529.6" class="num" text-anchor="middle">4</text>
+  <text x="982" y="530" class="small" style="fill:#cfd5dc"><tspan class="b">trace</tspan>  every call is shown live</text>
+  <text x="982" y="549" class="small" style="fill:#cfd5dc">and logged</text>
+  <circle cx="959" cy="576" r="10" fill="#6dcaf8"/>
+  <text x="959" y="580.6" class="num" text-anchor="middle">5</text>
+  <text x="982" y="581" class="small" style="fill:#cfd5dc"><tspan class="b">pictures</tspan>  screenshots and photos</text>
+  <text x="982" y="600" class="small" style="fill:#cfd5dc">sized down for the model</text>
+  <path class="ln" d="M948 629L1216 629" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="948" y="651" class="muted">Links: his own process directly, his tools</text>
+  <text x="948" y="670" class="muted">process over stdio, external servers over</text>
+  <text x="948" y="689" class="muted">stdio, HTTP or SSE.</text>
+  <rect x="932" y="747" width="300" height="110" rx="14" fill="url(#card)" stroke="#ff5251" stroke-opacity="0.34"/>
+  <rect x="946" y="747.5" width="272" height="1" fill="url(#rim)"/>
+  <text x="948" y="775" class="name">Confirmer</text>
+  <text x="1216" y="775" class="tag" text-anchor="end" style="fill:#ff7e77">confirm.py</text>
+  <text x="948" y="799" class="body">Asks before a risky call: a HUD dialog,</text>
+  <text x="948" y="819" class="body">a spoken yes or no, Discord buttons.</text>
+  <text x="948" y="839" class="body">No answer means no.</text>
+  <rect x="932" y="897" width="300" height="110" rx="14" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.34"/>
+  <rect x="946" y="897.5" width="272" height="1" fill="url(#rim)"/>
+  <text x="948" y="925" class="name">FallbackLLM</text>
+  <text x="1216" y="925" class="tag" text-anchor="end" style="fill:#d592f2">llm/fallback.py</text>
+  <text x="948" y="949" class="body">Your main brain, and a stand-in when it</text>
+  <text x="948" y="969" class="body">can't answer: Claude, then</text>
+  <text x="948" y="989" class="body">OpenRouter or Ollama.</text>
+
+  <!-- devices -->
+  <circle cx="44" cy="199.5" r="4" fill="#ff893b"/>
+  <text x="56" y="204" class="colhead" style="fill:#ffa873">DEVICES</text>
+  <rect x="40" y="252" width="244" height="110" rx="14" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.31"/>
+  <rect x="54" y="252.5" width="216" height="1" fill="url(#rim)"/>
+  <g transform="translate(56 264) scale(0.916667)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2.5" width="6" height="11.5" rx="3"/>
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0"/>
+    <path d="M12 17.5V21.5M8.5 21.5h7"/>
+  </g>
+  <text x="88" y="280" class="name">This machine</text>
+  <text x="56" y="304" class="body">The PC, laptop or server he</text>
+  <text x="56" y="324" class="body">runs on: its microphone,</text>
+  <text x="56" y="344" class="body">speakers and desktop.</text>
+  <rect x="40" y="376" width="244" height="130" rx="14" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.31"/>
+  <rect x="54" y="376.5" width="216" height="1" fill="url(#rim)"/>
+  <g transform="translate(56 388) scale(0.916667)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 15.5V5.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5v2"/>
+    <path d="M1.5 19h11"/>
+    <rect x="15" y="10" width="7.5" height="11.5" rx="1.6"/>
+    <path d="M18 19h1.5"/>
+  </g>
+  <text x="88" y="404" class="name">HUD in a browser</text>
+  <text x="56" y="428" class="body">On a laptop, a phone, a tablet:</text>
+  <text x="56" y="448" class="body">each can carry his voice, share</text>
+  <text x="56" y="468" class="body">its screen or camera, and lend</text>
+  <text x="56" y="488" class="body">its clipboard.</text>
+  <rect x="40" y="520" width="244" height="70" rx="14" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.31" stroke-dasharray="5 5"/>
+  <rect x="54" y="520.5" width="216" height="1" fill="url(#rim)"/>
+  <g transform="translate(56 532) scale(0.916667)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="4" width="19" height="16" rx="2.5"/>
+    <path d="M7 10l3 2.5L7 15M12.5 15.5h4.5"/>
+  </g>
+  <text x="88" y="548" class="name">Other AI apps</text>
+  <text x="56" y="572" class="body">Borrow his tools at <tspan class="cm">/mcp</tspan>.</text>
+  <rect x="40" y="648" width="244" height="110" rx="14" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.31"/>
+  <rect x="54" y="648.5" width="216" height="1" fill="url(#rim)"/>
+  <g transform="translate(56 660) scale(0.916667)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 4h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H11l-4.5 3.5V17h-2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+    <path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="2.4"/>
+  </g>
+  <text x="88" y="676" class="name">Discord</text>
+  <text x="56" y="700" class="body">Direct messages with pictures</text>
+  <text x="56" y="720" class="body">and voice notes; yes or no</text>
+  <text x="56" y="740" class="body">with buttons.</text>
+  <rect x="40" y="772" width="244" height="90" rx="14" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.31"/>
+  <rect x="54" y="772.5" width="216" height="1" fill="url(#rim)"/>
+  <g transform="translate(56 784) scale(0.916667)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8a2 2 0 0 1 2-2h2.5L9 3.8h6L16.5 6H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <circle cx="12" cy="12.8" r="3.8"/>
+  </g>
+  <text x="88" y="800" class="name">HandTracking camera</text>
+  <text x="56" y="824" class="body">A Raspberry Pi: 22 hand</text>
+  <text x="56" y="844" class="body">gestures, pushed as intents.</text>
+
+  <!-- tools and servers -->
+  <circle cx="1320" cy="199.5" r="4" fill="#6dcaf8"/>
+  <text x="1332" y="204" class="colhead" style="fill:#99dbfe">TOOLS &amp; SERVERS</text>
+  <text x="1560" y="204" class="tag" text-anchor="end" style="fill:#8f98a3">all MCP</text>
+  <rect x="1316" y="252" width="244" height="174" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.31"/>
+  <rect x="1330" y="252.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="1332" y="280" class="name">In Orion's process</text>
+  <text x="1332" y="302" class="small" style="fill:#8f98a3">reached directly</text>
+  <rect x="1332" y="316" width="61.3" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="333.6" class="chipm" style="fill:#c5ebff">orion</text>
+  <rect x="1401.3" y="316" width="53.1" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1411.3" y="333.6" class="chipm" style="fill:#c5ebff">eyes</text>
+  <rect x="1332" y="350" width="94.4" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="367.6" class="chipm" style="fill:#c5ebff">clipboard</text>
+  <rect x="1434.4" y="350" width="53.1" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1444.4" y="367.6" class="chipm" style="fill:#c5ebff">jobs</text>
+  <rect x="1332" y="384" width="86.1" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="401.6" class="chipm" style="fill:#c5ebff">watchers</text>
+  <rect x="1316" y="440" width="244" height="193" rx="14" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.31"/>
+  <rect x="1330" y="440.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="1332" y="468" class="name">Tools process</text>
+  <text x="1332" y="490" class="small" style="fill:#8f98a3"><tspan class="cm">orion mcp-serve --hub</tspan>, one</text>
+  <text x="1332" y="509" class="small" style="fill:#8f98a3">stdio child</text>
+  <rect x="1332" y="523" width="69.6" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="540.6" class="chipm" style="fill:#c5ebff">system</text>
+  <rect x="1409.6" y="523" width="44.8" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1419.6" y="540.6" class="chipm" style="fill:#c5ebff">web</text>
+  <rect x="1332" y="557" width="94.4" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="574.6" class="chipm" style="fill:#c5ebff">organizer</text>
+  <rect x="1434.4" y="557" width="69.6" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1444.4" y="574.6" class="chipm" style="fill:#c5ebff">memory</text>
+  <rect x="1332" y="591" width="69.6" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1342" y="608.6" class="chipm" style="fill:#c5ebff">skills</text>
+  <rect x="1409.6" y="591" width="86.1" height="26" rx="13" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="1419.6" y="608.6" class="chipm" style="fill:#c5ebff">calendar</text>
+  <rect x="1316" y="647" width="244" height="329" rx="14" fill="url(#card)" stroke="#b1b8c2" stroke-opacity="0.14"/>
+  <rect x="1330" y="647.5" width="216" height="1" fill="url(#rim)"/>
+  <text x="1332" y="675" class="name">External MCP servers</text>
+  <text x="1332" y="697" class="small" style="fill:#8f98a3">from the integrations catalog, or</text>
+  <text x="1332" y="716" class="small" style="fill:#8f98a3">any you add</text>
+  <rect x="1332" y="730" width="123.9" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="747.6" class="chip" style="fill:#e6eaf0">Home Assistant</text>
+  <rect x="1332" y="764" width="148.3" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="781.6" class="chip" style="fill:#e6eaf0">Playwright browser</text>
+  <rect x="1332" y="798" width="187.8" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="815.6" class="chip" style="fill:#e6eaf0">e-mail · mcp-email-server</text>
+  <rect x="1332" y="832" width="144.1" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="849.6" class="chip" style="fill:#e6eaf0">Google Workspace</text>
+  <rect x="1332" y="866" width="113" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="883.6" class="chip" style="fill:#e6eaf0">Microsoft 365</text>
+  <rect x="1332" y="900" width="115.6" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="917.6" class="chip" style="fill:#e6eaf0">Discord bridge</text>
+  <rect x="1332" y="934" width="123.2" height="26" rx="13" fill="#b1b8c2" fill-opacity="0.07" stroke="#b1b8c2" stroke-opacity="0.22"/>
+  <text x="1342" y="951.6" class="chip" style="fill:#e6eaf0">any MCP server</text>
+
+  <!-- storage -->
+  <rect x="40" y="1093" width="790" height="245" rx="20" fill="url(#panel)" stroke="#ebbd57" stroke-opacity="0.27"/>
+  <rect x="60" y="1093.5" width="750" height="1" fill="url(#rim)"/>
+  <circle cx="64" cy="1120.5" r="4" fill="#ebbd57"/>
+  <text x="76" y="1125" class="colhead" style="fill:#f5d38c">STORAGE  ·  DATA/</text>
+  <text x="810" y="1125" class="muted" text-anchor="end">everything he keeps: back it up to move him</text>
+  <rect x="60" y="1145" width="368" height="90" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.20"/>
+  <rect x="74" y="1145.5" width="340" height="1" fill="url(#rim)"/>
+  <text x="76" y="1172" class="code" style="fill:#fde9bf">memory/</text>
+  <text x="412" y="1172" class="muted" text-anchor="end">Markdown</text>
+  <text x="76" y="1194" class="small"><tspan class="cm">USER.md</tspan> · <tspan class="cm">MEMORY.md</tspan> · <tspan class="cm">facts.md</tspan> ·</text>
+  <text x="76" y="1213" class="small"><tspan class="cm">unverified.md</tspan> · <tspan class="cm">journal/</tspan> · <tspan class="cm">notes/</tspan></text>
+  <rect x="442" y="1145" width="368" height="90" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.20"/>
+  <rect x="456" y="1145.5" width="340" height="1" fill="url(#rim)"/>
+  <text x="458" y="1172" class="code" style="fill:#fde9bf">orion.db</text>
+  <text x="794" y="1172" class="muted" text-anchor="end">SQLite</text>
+  <text x="458" y="1194" class="small">conversations, messages, steps, reminders, to-dos,</text>
+  <text x="458" y="1213" class="small">jobs; the memory index with FTS5 and vectors</text>
+  <rect x="60" y="1247" width="240.7" height="71" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.20"/>
+  <rect x="74" y="1247.5" width="212.7" height="1" fill="url(#rim)"/>
+  <text x="76" y="1274" class="code" style="fill:#fde9bf">skills/</text>
+  <text x="76" y="1296" class="small">one <tspan class="cm">&lt;name&gt;/SKILL.md</tspan> per skill</text>
+  <rect x="314.7" y="1247" width="240.7" height="71" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.20"/>
+  <rect x="328.7" y="1247.5" width="212.7" height="1" fill="url(#rim)"/>
+  <text x="330.7" y="1274" class="code" style="fill:#fde9bf">models/</text>
+  <text x="330.7" y="1296" class="small">Whisper, Kokoro, the embedder</text>
+  <rect x="569.3" y="1247" width="240.7" height="71" rx="14" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.20"/>
+  <rect x="583.3" y="1247.5" width="212.7" height="1" fill="url(#rim)"/>
+  <text x="585.3" y="1274" class="code" style="fill:#fde9bf">config.yaml</text>
+  <text x="585.3" y="1296" class="small">every setting, applied live</text>
+
+  <!-- brains -->
+  <rect x="870" y="1093" width="690" height="245" rx="20" fill="url(#panel)" stroke="#cc70f2" stroke-opacity="0.27"/>
+  <rect x="890" y="1093.5" width="650" height="1" fill="url(#rim)"/>
+  <circle cx="894" cy="1120.5" r="4" fill="#cc70f2"/>
+  <text x="906" y="1125" class="colhead" style="fill:#d592f2">BRAINS</text>
+  <text x="1540" y="1125" class="tag" text-anchor="end" style="fill:#d592f2">llm/</text>
+  <rect x="890" y="1145" width="208.7" height="173" rx="14" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.20"/>
+  <rect x="904" y="1145.5" width="180.7" height="1" fill="url(#rim)"/>
+  <text x="906" y="1172" class="name">Claude plan</text>
+  <text x="1082.7" y="1172" class="muted" text-anchor="end" style="fill:#d592f2">default</text>
+  <text x="906" y="1194" class="small">Haiku, Sonnet or Opus</text>
+  <text x="906" y="1213" class="small">through Claude Code and</text>
+  <text x="906" y="1232" class="small">the Claude Agent SDK,</text>
+  <text x="906" y="1251" class="small">using only Orion's tools.</text>
+  <rect x="1110.7" y="1145" width="208.7" height="173" rx="14" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.20"/>
+  <rect x="1124.7" y="1145.5" width="180.7" height="1" fill="url(#rim)"/>
+  <text x="1126.7" y="1172" class="name">OpenRouter</text>
+  <text x="1303.3" y="1172" class="muted" text-anchor="end" style="fill:#d592f2">stand-in</text>
+  <text x="1126.7" y="1194" class="small">A cloud model with your</text>
+  <text x="1126.7" y="1213" class="small">key; the default stand-in</text>
+  <text x="1126.7" y="1232" class="small">when Claude can't answer.</text>
+  <rect x="1331.3" y="1145" width="208.7" height="173" rx="14" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.20"/>
+  <rect x="1345.3" y="1145.5" width="180.7" height="1" fill="url(#rim)"/>
+  <text x="1347.3" y="1172" class="name">Ollama</text>
+  <text x="1524" y="1172" class="muted" text-anchor="end" style="fill:#d592f2">opt-in</text>
+  <text x="1347.3" y="1194" class="small">A model on this PC's own</text>
+  <text x="1347.3" y="1213" class="small">GPU, started when needed.</text>
+
+  <!-- connectors: yours in orange, his answers in teal and blue -->
+  <path class="ln" d="M290 286L360 286" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)"/>
+  <path class="ln" d="M360 298L290 298" stroke="#45e2d2" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-aurora)"/>
+  <path class="ln" d="M290 410L360 410" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)"/>
+  <path class="ln" d="M360 422L290 422" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <path class="ln" d="M290 550L308 550Q316 550 316 542L316 480Q316 472 324 472L360 472" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" stroke-dasharray="4 5" marker-end="url(#ah-betel)"/>
+  <path class="ln" d="M290 678L308 678Q316 678 316 686L316 691Q316 699 324 699L360 699" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)"/>
+  <path class="ln" d="M290 802L308 802Q316 802 316 794L316 707Q316 699 324 699L360 699" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)"/>
+
+  <!-- ways in -> the TurnRunner -->
+  <path class="ln" d="M629 508L634.5 508Q640 508 640 502.5L640 308" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.60"/>
+  <path class="ln" d="M629 699L634.5 699Q640 699 640 693.5L640 308" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.60"/>
+  <path class="ln" d="M629 803L634.5 803Q640 803 640 797.5L640 308" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.60"/>
+  <path class="ln" d="M629 907L634.5 907Q640 907 640 901.5L640 308" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.60"/>
+  <path class="ln" d="M630 292L648 292" stroke="#45e2d2" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-aurora)" marker-start="url(#ah-aurora)"/>
+  <path class="ln" d="M640 308L648 308" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+
+  <!-- turn -> brain -> memory; brain <-> hub; brain -> fallback; hub -> confirmer, tools -->
+  <path class="ln" d="M778 388L778 484" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <rect x="750.8" y="426" width="54.4" height="22" rx="11" fill="#060c19" stroke="#6dcaf8" stroke-opacity="0.35"/>
+  <text x="778" y="441.5" class="arrowlabel" text-anchor="middle" style="fill:#c5ebff">a turn</text>
+  <path class="ln" d="M778 706L778 802" stroke="#ebbd57" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-dusk)" marker-start="url(#ah-dusk)"/>
+  <rect x="751.7" y="744" width="52.7" height="22" rx="11" fill="#060c19" stroke="#ebbd57" stroke-opacity="0.35"/>
+  <text x="778" y="759.5" class="arrowlabel" text-anchor="middle" style="fill:#fde9bf">recall</text>
+  <path class="ln" d="M906 536L922 536" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <path class="ln" d="M922 550L906 550" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.55" marker-end="url(#ah-rigel)"/>
+  <path class="ln" d="M905 674L910.5 674Q916 674 916 679.5L916 927Q916 931 920 931L924 931" stroke="#cc70f2" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-nebula)"/>
+  <path class="ln" d="M1082 717L1082 739" stroke="#ff5251" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-alert)"/>
+  <rect x="993.1" y="716" width="177.9" height="22" rx="11" fill="#060c19" stroke="#ff5251" stroke-opacity="0.35"/>
+  <text x="1082" y="731.5" class="arrowlabel" text-anchor="middle" style="fill:#f5a69f">risky after web content?</text>
+  <path class="ln" d="M1242 290L1308 290" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <path class="ln" d="M1242 478L1308 478" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <path class="ln" d="M1242 685L1308 685" stroke="#6dcaf8" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+
+  <!-- memory -> storage; fallback -> brains -->
+  <path class="ln" d="M778 926L778 1085" stroke="#ebbd57" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-dusk)" marker-start="url(#ah-dusk)"/>
+  <rect x="722.1" y="1050" width="111.8" height="22" rx="11" fill="#060c19" stroke="#ebbd57" stroke-opacity="0.35"/>
+  <text x="778" y="1065.5" class="arrowlabel" text-anchor="middle" style="fill:#fde9bf">files and index</text>
+  <path class="ln" d="M1024 1013L1024 1085" stroke="#cc70f2" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-nebula)"/>
+  <rect x="920.8" y="1050" width="206.4" height="22" rx="11" fill="#060c19" stroke="#cc70f2" stroke-opacity="0.35"/>
+  <text x="1024" y="1065.5" class="arrowlabel" text-anchor="middle" style="fill:#dab3ed">Claude · OpenRouter · Ollama</text>
+
+  <!-- footer -->
+  <path class="ln" d="M48 1374L1552 1374" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="48" y="1400" class="foot">ORION  ·  2026-10-11</text>
+  <circle cx="998.9" cy="1395.5" r="5" fill="#ff893b"/>
+  <text x="1008.9" y="1400" class="legend">you &amp; your devices</text>
+  <circle cx="1160.5" cy="1395.5" r="5" fill="#6dcaf8"/>
+  <text x="1170.5" y="1400" class="legend">Orion</text>
+  <circle cx="1237.2" cy="1395.5" r="5" fill="#cc70f2"/>
+  <text x="1247.2" y="1400" class="legend">thinking</text>
+  <circle cx="1331.6" cy="1395.5" r="5" fill="#45e2d2"/>
+  <text x="1341.6" y="1400" class="legend">voice</text>
+  <circle cx="1407.5" cy="1395.5" r="5" fill="#ebbd57"/>
+  <text x="1417.5" y="1400" class="legend">storage</text>
+  <circle cx="1498.7" cy="1395.5" r="5" fill="#ff5251"/>
+  <text x="1508.7" y="1400" class="legend">risky</text>
+</svg>

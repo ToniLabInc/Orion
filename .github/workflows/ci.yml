@@ -1,0 +1,88 @@
+# Lint and test the Python backend, check the HUD (lint, types, tests, and that the committed build in orion/hud/dist is
+# what its sources build), check the shell scripts, and build the Docker image (without pushing it).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.12.19" # what the Dockerfile uses
+  RUFF_VERSION: "0.17.1"
+  # `uv run --only-group web` makes the environment hold Node alone, so the HUD's tools get a folder of their own
+  WEB_ENV: ${{ github.workspace }}/../web-env
+
+jobs:
+  python:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: System libraries (PortAudio for sounddevice, bubblewrap for the sandbox's tests)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libportaudio2 bubblewrap
+          # Ubuntu 24.04 refuses bubblewrap its user namespace unless told otherwise; the sandbox tests skip if it still can't
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - run: pip install "uv==$UV_VERSION"
+      - name: The HUD's packages (one test reads the icon set from them)
+        run: UV_PROJECT_ENVIRONMENT="$WEB_ENV" uv run --frozen --only-group web npm --prefix web ci
+      - run: uv sync --frozen
+      - run: uvx "ruff@$RUFF_VERSION" check orion tests
+      - run: uv run --frozen pytest
+
+  hud:
+    name: HUD
+    runs-on: ubuntu-latest
+    env:
+      UV_PROJECT_ENVIRONMENT: ${{ github.workspace }}/../web-env
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install "uv==$UV_VERSION"
+      - run: uv run --frozen --only-group web npm --prefix web ci
+      - run: uv run --frozen --only-group web npm --prefix web run lint
+      - run: uv run --frozen --only-group web npm --prefix web run typecheck
+      - run: uv run --frozen --only-group web npm --prefix web test
+      - run: uv run --frozen --only-group web npm --prefix web run build
+      - name: The committed build is the one these sources make
+        run: |
+          if [ -n "$(git status --porcelain -- orion/hud/dist)" ]; then
+            git status --short -- orion/hud/dist
+            echo "::error::orion/hud/dist is out of date: run 'npm --prefix web run build' (see web/README.md) and commit it"
+            exit 1
+          fi
+
+  shell:
+    name: Shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: shellcheck install.sh docker/up.sh docker/entrypoint.sh
+
+  image:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Build (not pushed)
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: false
+          tags: orion:ci

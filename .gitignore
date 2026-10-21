@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[codz]
+.venv/
+build/
+dist/
+# the HUD's build is committed, so installing Orion needs only uv (web/ holds its sources)
+!orion/hud/dist/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.env
+
+# Node, for building the HUD (web/)
+web/node_modules
+
+# Orion runtime data: settings, memory, database, models, logs and skills all live in data/.
+# Only the starter skills that ship with Orion are tracked; skills you or Orion create stay private.
+data/*
+!data/skills/
+data/skills/*
+!data/skills/deep-research/
+!data/skills/morning-briefing/
+!data/skills/pc-checkup/
+!data/skills/play-music/
+# Versions before 30 September 2026 kept the settings (API keys included) here: never commit an old copy.
+/config.yaml
+
+# docker/up.sh writes this for the machine it runs on
+/compose.override.yaml
+
+# the sandbox's tests make a fake home here (not in /tmp: the sandbox's own /tmp is private) and remove it after
+/.sandbox-test-*/
+
+# Claude Code worktrees (agents working on a branch)
+/.claude/worktrees/

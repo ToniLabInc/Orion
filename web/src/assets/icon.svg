@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>ORION</title>
+  <rect width="32" height="32" rx="8" fill="#02040c"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M16 2.6a13.4 13.4 0 1 1 0 26.8a13.4 13.4 0 1 1 0-26.8" stroke="#55b0dd" stroke-width="1.1" opacity=".75"/>
+    <path d="M9.6 7.4 13.3 17.6M22.2 8.8 18.7 15.4M13.3 17.6 11.2 25.4M18.7 15.4 23.3 24.4M13.3 17.6 18.7 15.4" stroke="#55b0dd" stroke-width="1"/>
+    <path d="M9.6 7.4h.01" stroke="#ff893b" stroke-width="3.8"/>
+    <path d="M22.2 8.8h.01M13.3 17.6h.01M16 16.5h.01M18.7 15.4h.01M11.2 25.4h.01" stroke="#91d7fb" stroke-width="2.6"/>
+    <path d="M23.3 24.4h.01" stroke="#d9f1fe" stroke-width="3.5"/>
+  </g>
+</svg>

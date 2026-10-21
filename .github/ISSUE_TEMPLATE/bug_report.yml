@@ -1,0 +1,53 @@
+name: Bug report
+description: Something doesn't work, or he did something he shouldn't have.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. **Never paste a key, token, password or your `data/` folder.** `orion check` and the
+        logs hide the secrets he knows, but read what you paste. If he leaked a secret, or a limit didn't hold, report it
+        privately instead (SECURITY.md).
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce it
+      description: What you said or clicked, in which part of the HUD, and with which brain.
+      placeholder: "1. ...\n2. ..."
+  - type: dropdown
+    id: how
+    attributes:
+      label: How do you run him?
+      options: [Natively on Linux (install.sh), Docker, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "`git rev-parse --short HEAD` in his folder, or the image tag."
+    validations:
+      required: true
+  - type: dropdown
+    id: brain
+    attributes:
+      label: Brain
+      options: [Your Claude plan, This PC (Ollama), OpenRouter, Scripted, Not sure]
+  - type: textarea
+    id: check
+    attributes:
+      label: "`orion check`"
+      description: Paste its output (it says what is missing on this machine).
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "`journalctl --user -u orion -n 100`, or `docker compose logs --tail 100` (read it first)."
+      render: text

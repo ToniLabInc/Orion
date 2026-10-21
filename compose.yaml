@@ -1,0 +1,72 @@
+# ORION in Docker. Start him with ./docker/up.sh: it looks at the machine (your user, an NVIDIA GPU Docker can
+# reach, a sound server, the time zone) and writes compose.override.yaml to match, which Docker Compose merges into this
+# file by itself. A plain `docker compose up -d --build` runs these portable defaults instead: the CPU, no sound, user
+# 1000. Then open http://localhost:8765 (docker/README.md explains it all). Run him here or natively, not both: they
+# would want the same port.
+#
+# Secrets go in a file named .env beside this one (git ignores it); Docker Compose reads it by itself:
+#   CLAUDE_CODE_OAUTH_TOKEN=...   your Claude plan: run `claude setup-token` on any machine with a browser
+#   OPENROUTER_API_KEY=...        a cloud brain, or the stand-in when the Claude plan's limit is reached
+name: orion
+
+services:
+  orion:
+    build:
+      context: .
+      args: {UID: "1000", GID: "1000", GPU: "0"} # GPU "1": CUDA's cuBLAS for Whisper (docker/up.sh sets these)
+    image: orion:latest
+    container_name: orion
+    # Host networking keeps his server on this machine alone: it binds 127.0.0.1 inside the container, which is then
+    # the host's own loopback, and no port is published to the network. It also lets him reach an Ollama running on
+    # the host at its usual http://127.0.0.1:11434 (start Ollama yourself: the container can't), and the browser
+    # below at http://127.0.0.1:8931. Docker Desktop (macOS, Windows): Settings, Resources, Network, Enable host
+    # networking.
+    network_mode: host
+    user: "1000:1000" # docker/up.sh: your `id -u`:`id -g`, so the files in his data folder are yours
+    init: true # reaps what his tools start (commands, his tools' process, the integrations' servers)
+    restart: on-failure # as under systemd: back after a crash; a shutdown asked in the HUD stays down
+    stop_grace_period: 30s # time to finish an answer and close his databases
+    command: ["run", "--no-voice"] # docker/up.sh: ["run"] where there is a sound server, so the microphone opens;
+    # without one he still listens and speaks through a browser that takes the voice (the HUD's talk button)
+    environment:
+      # Both stay in his own environment only: his commands and integrations get a clean one, and he cuts them out of
+      # whatever a model, a log or a channel receives (docs/SECURITY.md).
+      CLAUDE_CODE_OAUTH_TOKEN: ${CLAUDE_CODE_OAUTH_TOKEN:-} # from .env: Claude Code signs in with it
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-} # from .env: instead of a key in his settings
+    volumes:
+      # His settings (config.yaml), memory, skills, models and logs. A new volume starts empty: he writes his settings
+      # and downloads his models (about 480 MB) at the first start. ORION_DATA=<folder> ./docker/up.sh uses a
+      # folder of yours instead; your native install's data/ works too, but never while the native Orion runs.
+      - data:/app/data
+      # What uvx downloads for the integrations (mail, Google, Microsoft, the browser on a desktop), kept across
+      # restarts so they start at once.
+      - uv-cache:/home/orion/.cache/uv
+
+  # A headless browser he drives (Settings, Abilities, Browser control): `docker compose --profile browser up -d`,
+  # or ./docker/up.sh --browser. Its port is on this machine's loopback only, and it has no password: never publish
+  # it to your network.
+  browser:
+    profiles: [browser]
+    image: mcr.microsoft.com/playwright/mcp:v0.0.83
+    container_name: orion-browser
+    command: # after the image's own: tini, node cli.js --headless --browser chromium --no-sandbox
+      - --port=8931
+      - --host=0.0.0.0
+      - --allowed-hosts=127.0.0.1:8931
+      - --shared-browser-context
+      - --user-data-dir=/home/node/profile
+      - --output-dir=/tmp/playwright
+      - --no-webmcp
+      - --image-responses=allow
+    ports: ["127.0.0.1:8931:8931"]
+    stdin_open: true # it stops when its input closes
+    shm_size: 1gb
+    mem_limit: 2g
+    restart: unless-stopped
+    volumes:
+      - browser-home:/home/node # its sign-ins, kept
+
+volumes:
+  data:
+  uv-cache:
+  browser-home:

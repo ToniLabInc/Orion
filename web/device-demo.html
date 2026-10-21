@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Orion's own policy (orion/server.py), so the demo proves the worklets load under it (frame-ancestors aside) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' ws://localhost:* ws://127.0.0.1:*; worker-src 'self' blob:; base-uri 'none'; object-src 'none'"
+    />
+    <title>ORION · this browser as a device</title>
+  </head>
+  <body>
+    <main id="demo"></main>
+    <script type="module" src="/src/device/demo.ts"></script>
+  </body>
+</html>
