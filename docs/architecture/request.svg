@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1098" viewBox="0 0 1600 1098" role="img" aria-labelledby="title desc" font-family="Geist, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif">
+  <title id="title">The life of a request</title>
+  <desc id="desc">One request through ORION, in seven stages along a line. 1: it is heard (his name, or a HUD's talk button), typed in a HUD with pictures, or sent on Discord, where a voice note is transcribed by Whisper. 2: the TurnRunner runs one turn at a time and answers a summons without the model. 3: the brain prepares: it embeds the request once, matches a skill, recalls up to three memories, writes the turn's tail and picks the toolbox. 4: the model's rounds: it streams text and speech starts at the first comma; tool calls end a round; read-only tools run in parallel. 5: the hub, for every call: can this machine run it; is it risky after web or app content, in which case you are asked in the HUD, aloud or on Discord, and no answer means no; then it runs, its text and pictures come back sized down, and the turn is tainted if the tool read the open world. 6: the results go back to the model for another round until it answers. 7: the reply is spoken on this machine or in the browser carrying the voice, shown in every HUD and sent back to Discord; the history keeps a note in place of pictures, and the memory review comes later.</desc>
+  <style>
+    .cm{font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace;font-weight:450}
+    .b{font-weight:600}
+    .eyebrow{font-size:13px;fill:#99dbfe;font-weight:600;letter-spacing:0.32em}
+    .title{font-size:34px;fill:#f4f7fb;font-weight:600;letter-spacing:-0.01em}
+    .subtitle{font-size:16.5px;fill:#b1b8c2}
+    .colhead{font-size:13px;fill:#b1b8c2;font-weight:600;letter-spacing:0.2em}
+    .name{font-size:16px;fill:#f4f7fb;font-weight:600}
+    .big{font-size:19px;fill:#f4f7fb;font-weight:600}
+    .body{font-size:14px;fill:#cfd5dc}
+    .bodyb{font-size:14px;fill:#e6eaf0;font-weight:600}
+    .small{font-size:13px;fill:#b1b8c2}
+    .smallb{font-size:13px;fill:#cfd5dc;font-weight:600}
+    .muted{font-size:13px;fill:#8f98a3}
+    .tag{font-size:13px;fill:#8f98a3;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .code{font-size:13px;fill:#cfd5dc;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .chip{font-size:13px;fill:#e6eaf0;font-weight:500}
+    .chipm{font-size:13px;fill:#e6eaf0;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .num{font-size:13px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .numbig{font-size:17px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .foot{font-size:13px;fill:#8f98a3;font-weight:500;letter-spacing:0.16em}
+    .legend{font-size:13px;fill:#b1b8c2}
+    .arrowlabel{font-size:13px;fill:#b1b8c2;font-weight:500}
+    .ln{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090e1c"/><stop offset="0.55" stop-color="#060c19"/>
+      <stop offset="1" stop-color="#02040c"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#6dcaf8" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#6dcaf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121b2c" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#0b1423" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18233a" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#111a2c" stop-opacity="0.97"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ah-alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ff5251"/>
+    </marker>
+    <marker id="ah-aurora" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#45e2d2"/>
+    </marker>
+    <marker id="ah-nebula" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#cc70f2"/>
+    </marker>
+    <linearGradient id="g-betel-betel-70" gradientUnits="userSpaceOnUse" x1="70" y1="0" x2="150" y2="0">
+      <stop offset="0" stop-color="#ff893b"/><stop offset="1" stop-color="#ff893b"/>
+    </linearGradient>
+    <linearGradient id="g-betel-rigel-150" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="367" y2="0">
+      <stop offset="0" stop-color="#ff893b"/><stop offset="1" stop-color="#6dcaf8"/>
+    </linearGradient>
+    <linearGradient id="g-rigel-nebula-367" gradientUnits="userSpaceOnUse" x1="367" y1="0" x2="583" y2="0">
+      <stop offset="0" stop-color="#6dcaf8"/><stop offset="1" stop-color="#cc70f2"/>
+    </linearGradient>
+    <linearGradient id="g-nebula-nebula-583" gradientUnits="userSpaceOnUse" x1="583" y1="0" x2="800" y2="0">
+      <stop offset="0" stop-color="#cc70f2"/><stop offset="1" stop-color="#cc70f2"/>
+    </linearGradient>
+    <linearGradient id="g-nebula-rigel-800" gradientUnits="userSpaceOnUse" x1="800" y1="0" x2="1017" y2="0">
+      <stop offset="0" stop-color="#cc70f2"/><stop offset="1" stop-color="#6dcaf8"/>
+    </linearGradient>
+    <linearGradient id="g-rigel-nebula-1017" gradientUnits="userSpaceOnUse" x1="1017" y1="0" x2="1233" y2="0">
+      <stop offset="0" stop-color="#6dcaf8"/><stop offset="1" stop-color="#cc70f2"/>
+    </linearGradient>
+    <linearGradient id="g-nebula-aurora-1233" gradientUnits="userSpaceOnUse" x1="1233" y1="0" x2="1450" y2="0">
+      <stop offset="0" stop-color="#cc70f2"/><stop offset="1" stop-color="#45e2d2"/>
+    </linearGradient>
+    <linearGradient id="g-aurora-aurora-1450" gradientUnits="userSpaceOnUse" x1="1450" y1="0" x2="1520" y2="0">
+      <stop offset="0" stop-color="#45e2d2"/><stop offset="1" stop-color="#45e2d2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- deep space -->
+  <rect width="1600" height="1098" fill="url(#space)"/>
+  <g fill="#dfe8ff">
+    <circle cx="1473" cy="1034.4" r="0.6" fill-opacity="0.13"/>
+    <circle cx="493.9" cy="418.3" r="0.8" fill-opacity="0.16"/>
+    <circle cx="312.1" cy="489" r="0.7" fill-opacity="0.31"/>
+    <circle cx="1436.2" cy="122.6" r="0.9" fill-opacity="0.25"/>
+    <circle cx="820" cy="802.4" r="0.8" fill-opacity="0.35"/>
+    <circle cx="333.7" cy="46.2" r="0.8" fill-opacity="0.32"/>
+    <circle cx="991.7" cy="1058.3" r="0.8" fill-opacity="0.29"/>
+    <circle cx="1370.5" cy="1056" r="0.8" fill-opacity="0.32"/>
+    <circle cx="506" cy="100.8" r="0.9" fill-opacity="0.17"/>
+    <circle cx="773.2" cy="864.4" r="0.7" fill-opacity="0.17"/>
+    <circle cx="290.8" cy="357.9" r="1.1" fill-opacity="0.18"/>
+    <circle cx="189.1" cy="114.7" r="0.6" fill-opacity="0.29"/>
+    <circle cx="1497.1" cy="311.6" r="1.1" fill-opacity="0.22"/>
+    <circle cx="593.5" cy="320.1" r="0.8" fill-opacity="0.39"/>
+    <circle cx="728.3" cy="244.2" r="0.7" fill-opacity="0.15"/>
+    <circle cx="1249.6" cy="773.1" r="0.9" fill-opacity="0.19"/>
+    <circle cx="872" cy="1002.1" r="1.1" fill-opacity="0.15"/>
+    <circle cx="614.7" cy="494.2" r="0.6" fill-opacity="0.14"/>
+    <circle cx="667.3" cy="33.3" r="0.7" fill-opacity="0.33"/>
+    <circle cx="1550.4" cy="879" r="0.6" fill-opacity="0.28"/>
+    <circle cx="1573.3" cy="818.4" r="0.8" fill-opacity="0.12"/>
+    <circle cx="1256.6" cy="538.8" r="0.6" fill-opacity="0.14"/>
+    <circle cx="746.1" cy="220.8" r="0.9" fill-opacity="0.41"/>
+    <circle cx="350.1" cy="120" r="1.1" fill-opacity="0.31"/>
+    <circle cx="1101.9" cy="611.7" r="0.7" fill-opacity="0.20"/>
+    <circle cx="676.1" cy="982.7" r="0.9" fill-opacity="0.35"/>
+    <circle cx="1048" cy="456.4" r="0.7" fill-opacity="0.39"/>
+    <circle cx="1097.4" cy="454.5" r="0.7" fill-opacity="0.28"/>
+    <circle cx="681.4" cy="331.4" r="1.1" fill-opacity="0.30"/>
+    <circle cx="89.6" cy="316.2" r="0.6" fill-opacity="0.31"/>
+    <circle cx="534.7" cy="613.2" r="0.9" fill-opacity="0.19"/>
+    <circle cx="1515.2" cy="93" r="1.1" fill-opacity="0.33"/>
+    <circle cx="188" cy="967.7" r="0.9" fill-opacity="0.36"/>
+    <circle cx="1573.5" cy="302.4" r="0.8" fill-opacity="0.23"/>
+    <circle cx="1252.4" cy="161.5" r="0.9" fill-opacity="0.18"/>
+    <circle cx="1086.9" cy="195.4" r="0.9" fill-opacity="0.34"/>
+    <circle cx="1520.2" cy="462.4" r="0.8" fill-opacity="0.26"/>
+    <circle cx="1099.4" cy="591.3" r="1.1" fill-opacity="0.17"/>
+    <circle cx="851.4" cy="295.2" r="0.6" fill-opacity="0.19"/>
+    <circle cx="106.5" cy="971" r="0.9" fill-opacity="0.35"/>
+    <circle cx="1074.6" cy="662.7" r="0.8" fill-opacity="0.32"/>
+    <circle cx="653.3" cy="878.7" r="0.8" fill-opacity="0.41"/>
+    <circle cx="548.6" cy="427.3" r="0.9" fill-opacity="0.39"/>
+    <circle cx="1066" cy="825.9" r="0.8" fill-opacity="0.28"/>
+    <circle cx="1102.6" cy="423.5" r="0.8" fill-opacity="0.42"/>
+    <circle cx="239.7" cy="409.5" r="1.1" fill-opacity="0.26"/>
+    <circle cx="199.6" cy="620.4" r="0.9" fill-opacity="0.12"/>
+    <circle cx="66.7" cy="855" r="0.6" fill-opacity="0.19"/>
+    <circle cx="1564.5" cy="694.2" r="0.6" fill-opacity="0.24"/>
+    <circle cx="134.1" cy="224.9" r="1.1" fill-opacity="0.16"/>
+    <circle cx="1334.5" cy="105.8" r="1.1" fill-opacity="0.24"/>
+    <circle cx="1084.2" cy="325.1" r="0.6" fill-opacity="0.31"/>
+    <circle cx="1111.1" cy="662.6" r="0.6" fill-opacity="0.41"/>
+    <circle cx="1452.3" cy="205.6" r="0.6" fill-opacity="0.16"/>
+    <circle cx="1089.8" cy="1016.7" r="0.8" fill-opacity="0.26"/>
+    <circle cx="1131.2" cy="624.5" r="0.6" fill-opacity="0.37"/>
+    <circle cx="963" cy="647.9" r="0.8" fill-opacity="0.13"/>
+    <circle cx="563.2" cy="181.2" r="0.7" fill-opacity="0.18"/>
+    <circle cx="683.7" cy="350.7" r="1.1" fill-opacity="0.19"/>
+    <circle cx="937.8" cy="1023.7" r="0.8" fill-opacity="0.28"/>
+    <circle cx="355.6" cy="614.9" r="0.8" fill-opacity="0.26"/>
+    <circle cx="1053" cy="1042" r="0.7" fill-opacity="0.23"/>
+    <circle cx="1563.5" cy="343.8" r="0.6" fill-opacity="0.27"/>
+    <circle cx="562.8" cy="235.6" r="1.1" fill-opacity="0.17"/>
+    <circle cx="508.3" cy="465.4" r="0.6" fill-opacity="0.21"/>
+    <circle cx="685" cy="898.4" r="1.1" fill-opacity="0.40"/>
+    <circle cx="588.6" cy="1041.5" r="0.6" fill-opacity="0.32"/>
+    <circle cx="713.6" cy="195.3" r="0.8" fill-opacity="0.29"/>
+    <circle cx="1540.6" cy="588.4" r="1.1" fill-opacity="0.31"/>
+    <circle cx="1297.1" cy="204.6" r="0.9" fill-opacity="0.41"/>
+  </g>
+
+  <!-- title -->
+  <text x="48" y="66" class="eyebrow">ORION  ·  ARCHITECTURE  ·  2 OF 4</text>
+  <text x="48" y="110" class="title">The life of a request</text>
+  <text x="48" y="142" class="subtitle">From your words to his answer: what happens to one request, stage by stage, and where it loops.</text>
+
+  <!-- the line: from you, through Orion, back to you -->
+  <g transform="translate(36 673) scale(1)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 21a8 8 0 0 1 16 0"/>
+  </g>
+  <path class="ln" d="M70 685H150" stroke="url(#g-betel-betel-70)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M150 685H367" stroke="url(#g-betel-rigel-150)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M367 685H583" stroke="url(#g-rigel-nebula-367)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M583 685H800" stroke="url(#g-nebula-nebula-583)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M800 685H1017" stroke="url(#g-nebula-rigel-800)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M1017 685H1233" stroke="url(#g-rigel-nebula-1017)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M1233 685H1450" stroke="url(#g-nebula-aurora-1233)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M1450 685H1520" stroke="url(#g-aurora-aurora-1450)" stroke-width="3" stroke-opacity="0.95"/>
+  <path class="ln" d="M1510 685H1530" stroke="#45e2d2" stroke-width="3" stroke-opacity="0.90" marker-end="url(#ah-aurora)"/>
+  <g transform="translate(1540 673) scale(1)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 21a8 8 0 0 1 16 0"/>
+  </g>
+
+  <!-- 6 -> 4: another round -->
+  <path class="ln" d="M1219 699L1219 710Q1219 721 1208 721L823.5 721Q814 721 814 711.5L814 702" stroke="#cc70f2" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-nebula)"/>
+  <rect x="908.7" y="710" width="215.6" height="22" rx="11" fill="#060c19" stroke="#cc70f2" stroke-opacity="0.35"/>
+  <text x="1016.5" y="725.5" class="arrowlabel" text-anchor="middle" style="fill:#dab3ed">another round, until it answers</text>
+
+  <!-- stems and stations -->
+  <path class="ln" d="M150 665L150 633" stroke="#ff893b" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M367 705L367 763" stroke="#6dcaf8" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M583 665L583 633" stroke="#cc70f2" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M800 705L800 763" stroke="#cc70f2" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M1017 665L1017 633" stroke="#6dcaf8" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M1233 705L1233 763" stroke="#cc70f2" stroke-opacity="0.55" stroke-width="1.5"/>
+  <path class="ln" d="M1450 665L1450 633" stroke="#45e2d2" stroke-opacity="0.55" stroke-width="1.5"/>
+  <circle cx="150" cy="685" r="24" fill="#ff893b" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="150" cy="685" r="18" fill="#ff893b"/>
+  <text x="150" y="691" class="numbig" text-anchor="middle">1</text>
+  <circle cx="367" cy="685" r="24" fill="#6dcaf8" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="367" cy="685" r="18" fill="#6dcaf8"/>
+  <text x="367" y="691" class="numbig" text-anchor="middle">2</text>
+  <circle cx="583" cy="685" r="24" fill="#cc70f2" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="583" cy="685" r="18" fill="#cc70f2"/>
+  <text x="583" y="691" class="numbig" text-anchor="middle">3</text>
+  <circle cx="800" cy="685" r="24" fill="#cc70f2" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="800" cy="685" r="18" fill="#cc70f2"/>
+  <text x="800" y="691" class="numbig" text-anchor="middle">4</text>
+  <circle cx="1017" cy="685" r="24" fill="#6dcaf8" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="1017" cy="685" r="18" fill="#6dcaf8"/>
+  <text x="1017" y="691" class="numbig" text-anchor="middle">5</text>
+  <circle cx="1233" cy="685" r="24" fill="#cc70f2" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="1233" cy="685" r="18" fill="#cc70f2"/>
+  <text x="1233" y="691" class="numbig" text-anchor="middle">6</text>
+  <circle cx="1450" cy="685" r="24" fill="#45e2d2" fill-opacity="0.35" filter="url(#glow)"/>
+  <circle cx="1450" cy="685" r="18" fill="#45e2d2"/>
+  <text x="1450" y="691" class="numbig" text-anchor="middle">7</text>
+
+  <!-- 1 · heard, typed or sent -->
+  <rect x="40" y="357" width="380" height="276" rx="18" fill="url(#card)" stroke="#ff893b" stroke-opacity="0.37"/>
+  <rect x="58" y="357.5" width="344" height="1" fill="url(#rim)"/>
+  <text x="58" y="389" class="big" style="fill:#ffa873">1</text>
+  <text x="82" y="389" class="big">Heard, typed or sent</text>
+  <g transform="translate(58 407) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2.5" width="6" height="11.5" rx="3"/>
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0"/>
+    <path d="M12 17.5V21.5M8.5 21.5h7"/>
+  </g>
+  <text x="92" y="423" class="bodyb">Spoken</text>
+  <text x="92" y="445" class="small" style="fill:#cfd5dc">His name wakes him, even mid-sentence</text>
+  <text x="92" y="464" class="small" style="fill:#cfd5dc">(“…what time is it, Orion?”), or press a HUD's</text>
+  <text x="92" y="483" class="small" style="fill:#cfd5dc">talk button.</text>
+  <g transform="translate(58 498) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 15.5V5.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5v2"/>
+    <path d="M1.5 19h11"/>
+    <rect x="15" y="10" width="7.5" height="11.5" rx="1.6"/>
+    <path d="M18 19h1.5"/>
+  </g>
+  <text x="92" y="514" class="bodyb">Typed</text>
+  <text x="92" y="536" class="small" style="fill:#cfd5dc">In any HUD, with up to four pictures.</text>
+  <g transform="translate(58 551) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 4h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H11l-4.5 3.5V17h-2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+    <path d="M8 10.5h.01M12 10.5h.01M16 10.5h.01" stroke-width="2.4"/>
+  </g>
+  <text x="92" y="567" class="bodyb">Sent</text>
+  <text x="92" y="589" class="small" style="fill:#cfd5dc">A Discord message; a voice note is heard by</text>
+  <text x="92" y="608" class="small" style="fill:#cfd5dc">Whisper first.</text>
+
+  <!-- 2 · the TurnRunner -->
+  <rect x="196" y="763" width="352" height="231" rx="18" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="214" y="763.5" width="316" height="1" fill="url(#rim)"/>
+  <text x="214" y="795" class="big" style="fill:#99dbfe">2</text>
+  <text x="238" y="795" class="big">TurnRunner</text>
+  <text x="530" y="794" class="tag" text-anchor="end" style="fill:#99dbfe">brain/</text>
+  <circle cx="218" cy="822.5" r="3.5" fill="#6dcaf8"/>
+  <text x="232" y="827" class="small" style="fill:#cfd5dc">One turn at a time: a new request silences</text>
+  <text x="232" y="846" class="small" style="fill:#cfd5dc">what is left of the last reply.</text>
+  <circle cx="218" cy="869.5" r="3.5" fill="#6dcaf8"/>
+  <text x="232" y="874" class="small" style="fill:#cfd5dc">A summons (“show me the weather”) opens</text>
+  <text x="232" y="893" class="small" style="fill:#cfd5dc">the panel at once, without the model, while a</text>
+  <text x="232" y="912" class="small" style="fill:#cfd5dc">HUD is open.</text>
+  <circle cx="218" cy="935.5" r="3.5" fill="#6dcaf8"/>
+  <text x="232" y="940" class="small" style="fill:#cfd5dc">Every step goes live to the HUDs, and into</text>
+  <text x="232" y="959" class="small" style="fill:#cfd5dc">the log.</text>
+
+  <!-- 3 · the brain prepares -->
+  <rect x="440" y="308" width="330" height="325" rx="18" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.37"/>
+  <rect x="458" y="308.5" width="294" height="1" fill="url(#rim)"/>
+  <text x="458" y="340" class="big" style="fill:#d592f2">3</text>
+  <text x="482" y="340" class="big">The brain prepares</text>
+  <text x="752" y="339" class="tag" text-anchor="end" style="fill:#d592f2">brain/</text>
+  <circle cx="462" cy="367.5" r="3.5" fill="#cc70f2"/>
+  <text x="476" y="372" class="small" style="fill:#cfd5dc"><tspan class="b">embed</tspan> the request once: one vector for</text>
+  <text x="476" y="391" class="small" style="fill:#cfd5dc">the skill, the recall and the routing</text>
+  <circle cx="462" cy="414.5" r="3.5" fill="#cc70f2"/>
+  <text x="476" y="419" class="small" style="fill:#cfd5dc"><tspan class="b">skill</tspan> by its name, a trigger phrase or an</text>
+  <text x="476" y="438" class="small" style="fill:#cfd5dc">unmistakable meaning</text>
+  <circle cx="462" cy="461.5" r="3.5" fill="#cc70f2"/>
+  <text x="476" y="466" class="small" style="fill:#cfd5dc"><tspan class="b">recall</tspan> 0 to 3 memories from</text>
+  <text x="476" y="485" class="small" style="fill:#cfd5dc">other conversations</text>
+  <circle cx="462" cy="508.5" r="3.5" fill="#cc70f2"/>
+  <text x="476" y="513" class="small" style="fill:#cfd5dc"><tspan class="b">tail</tspan> the time, the channel, those memories,</text>
+  <text x="476" y="532" class="small" style="fill:#cfd5dc">the skill</text>
+  <circle cx="462" cy="555.5" r="3.5" fill="#cc70f2"/>
+  <text x="476" y="560" class="small" style="fill:#cfd5dc"><tspan class="b">toolbox</tspan> every tool for Claude, or</text>
+  <text x="476" y="579" class="small" style="fill:#cfd5dc">while they fit; else a routed short list</text>
+  <text x="476" y="598" class="small" style="fill:#cfd5dc">and <tspan class="cm">find_tools</tspan></text>
+
+  <!-- 4 · the model's rounds -->
+  <rect x="584" y="763" width="420" height="212" rx="18" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.37"/>
+  <rect x="602" y="763.5" width="384" height="1" fill="url(#rim)"/>
+  <text x="602" y="795" class="big" style="fill:#d592f2">4</text>
+  <text x="626" y="795" class="big">Model rounds</text>
+  <text x="986" y="794" class="tag" text-anchor="end" style="fill:#d592f2">llm/</text>
+  <circle cx="606" cy="822.5" r="3.5" fill="#cc70f2"/>
+  <text x="620" y="827" class="small" style="fill:#cfd5dc">Text streams in, and his speech starts at the</text>
+  <text x="620" y="846" class="small" style="fill:#cfd5dc">first comma.</text>
+  <circle cx="606" cy="869.5" r="3.5" fill="#cc70f2"/>
+  <text x="620" y="874" class="small" style="fill:#cfd5dc">Tool calls end a round. Read-only ones run in parallel, the</text>
+  <text x="620" y="893" class="small" style="fill:#cfd5dc">rest one by one in the model's order.</text>
+  <circle cx="606" cy="916.5" r="3.5" fill="#cc70f2"/>
+  <text x="620" y="921" class="small" style="fill:#cfd5dc">If the main brain fails before its first word, the</text>
+  <text x="620" y="940" class="small" style="fill:#cfd5dc">stand-in answers.</text>
+
+  <!-- 5 · the hub, for every tool call -->
+  <rect x="790" y="186" width="444" height="447" rx="18" fill="none" stroke="#6dcaf8" stroke-opacity="0.45" stroke-width="5" filter="url(#glow)"/>
+  <rect x="790" y="186" width="444" height="447" rx="18" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.54"/>
+  <rect x="808" y="186.5" width="408" height="1" fill="url(#rim)"/>
+  <text x="808" y="218" class="big" style="fill:#99dbfe">5</text>
+  <text x="832" y="218" class="big">The hub, for every tool call</text>
+  <text x="1216" y="217" class="tag" text-anchor="end" style="fill:#99dbfe">mcp.py</text>
+  <path class="ln" d="M818 272L818 588" stroke="#6dcaf8" stroke-opacity="0.50" stroke-width="1.5"/>
+  <path class="ln" d="M818 252.5L826.5 261L818 269.5L809.5 261Z" stroke="#6dcaf8" stroke-width="1.6" style="fill:#6dcaf8;fill-opacity:0.25"/>
+  <text x="840" y="266" class="bodyb">Can this machine run it?</text>
+  <text x="840" y="286" class="small" style="fill:#b1b8c2"><tspan class="cm">requires</tspan>, against the host profile</text>
+  <path class="ln" d="M1025.58348 261H1047.58348" stroke="#ff5251" stroke-width="1.5" stroke-opacity="0.90" marker-end="url(#ah-alert)"/>
+  <text x="1055.6" y="266" class="smallb" style="fill:#ff7e77">no: an error, in words</text>
+  <path class="ln" d="M818 308.5L826.5 317L818 325.5L809.5 317Z" stroke="#6dcaf8" stroke-width="1.6" style="fill:#6dcaf8;fill-opacity:0.25"/>
+  <text x="840" y="322" class="bodyb">Risky, after web or app content?</text>
+  <text x="840" y="342" class="small" style="fill:#b1b8c2">not read-only, not declared harmless</text>
+  <path class="ln" d="M1087.15464 317H1109.15464" stroke="#ff5251" stroke-width="1.5" stroke-opacity="0.90" marker-end="url(#ah-alert)"/>
+  <text x="1117.2" y="322" class="smallb" style="fill:#ff7e77">yes: ask you</text>
+  <rect x="840" y="360" width="376" height="87" rx="12" fill="url(#card)" stroke="#ff5251" stroke-opacity="0.41"/>
+  <rect x="852" y="360.5" width="352" height="1" fill="url(#rim)"/>
+  <rect x="840" y="360" width="376" height="87" rx="12" fill="#ff5251" fill-opacity="0.06"/>
+  <g transform="translate(852 372) scale(0.75)" stroke="#ff7e77" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 21a8 8 0 0 1 16 0"/>
+  </g>
+  <text x="880" y="387" class="small" style="fill:#e6eaf0"><tspan class="b">Ask you</tspan>: every HUD shows it; aloud if you spoke;</text>
+  <text x="880" y="406" class="small" style="fill:#e6eaf0">buttons on Discord if you wrote there</text>
+  <text x="880" y="425" class="small" style="fill:#f5a69f">yes: it runs  ·  no, or no answer in 60 s: not done</text>
+  <circle cx="818" cy="476" r="5.5" fill="#6dcaf8"/>
+  <text x="840" y="481" class="bodyb">Run it</text>
+  <text x="840" y="501" class="small" style="fill:#b1b8c2">in Orion, his tools process or an external server</text>
+  <circle cx="818" cy="532" r="5.5" fill="#6dcaf8"/>
+  <text x="840" y="537" class="bodyb">Result</text>
+  <text x="840" y="557" class="small" style="fill:#b1b8c2">its text, and pictures sized down for the model</text>
+  <circle cx="818" cy="588" r="5.5" fill="#6dcaf8"/>
+  <text x="840" y="593" class="bodyb">Taint the turn</text>
+  <text x="840" y="613" class="small" style="fill:#b1b8c2">if it read the web, mail or another server's answer</text>
+
+  <!-- 6 · back to the model -->
+  <rect x="1030" y="763" width="392" height="184" rx="18" fill="url(#card)" stroke="#cc70f2" stroke-opacity="0.37"/>
+  <rect x="1048" y="763.5" width="356" height="1" fill="url(#rim)"/>
+  <text x="1048" y="795" class="big" style="fill:#d592f2">6</text>
+  <text x="1072" y="795" class="big">Back to the model</text>
+  <circle cx="1052" cy="822.5" r="3.5" fill="#cc70f2"/>
+  <text x="1066" y="827" class="small" style="fill:#cfd5dc">The results go back in the model's order, each cut</text>
+  <text x="1066" y="846" class="small" style="fill:#cfd5dc">to <tspan class="cm">brain.tool_result_chars</tspan>.</text>
+  <circle cx="1052" cy="869.5" r="3.5" fill="#cc70f2"/>
+  <text x="1066" y="874" class="small" style="fill:#cfd5dc">Another round follows, until it answers without a</text>
+  <text x="1066" y="893" class="small" style="fill:#cfd5dc">tool: at most <tspan class="cm">brain.max_tool_rounds</tspan> (6), then he</text>
+  <text x="1066" y="912" class="small" style="fill:#cfd5dc">must answer.</text>
+
+  <!-- 7 · the reply -->
+  <rect x="1254" y="289" width="306" height="344" rx="18" fill="url(#card)" stroke="#45e2d2" stroke-opacity="0.41"/>
+  <rect x="1272" y="289.5" width="270" height="1" fill="url(#rim)"/>
+  <text x="1272" y="321" class="big" style="fill:#8bf0e3">7</text>
+  <text x="1296" y="321" class="big">The reply</text>
+  <circle cx="1276" cy="348.5" r="3.5" fill="#45e2d2"/>
+  <text x="1290" y="353" class="small" style="fill:#cfd5dc"><tspan class="b">Spoken</tspan> for a voice or HUD request: on</text>
+  <text x="1290" y="372" class="small" style="fill:#cfd5dc">this machine's speaker, or by the</text>
+  <text x="1290" y="391" class="small" style="fill:#cfd5dc">browser carrying the voice</text>
+  <circle cx="1276" cy="414.5" r="3.5" fill="#45e2d2"/>
+  <text x="1290" y="419" class="small" style="fill:#cfd5dc"><tspan class="b">Listening</tspan> 15 s more after a spoken</text>
+  <text x="1290" y="438" class="small" style="fill:#cfd5dc">reply, for a follow-up without his name</text>
+  <circle cx="1276" cy="461.5" r="3.5" fill="#45e2d2"/>
+  <text x="1290" y="466" class="small" style="fill:#cfd5dc"><tspan class="b">Shown</tspan> in every HUD, with each step</text>
+  <text x="1290" y="485" class="small" style="fill:#cfd5dc">it took</text>
+  <circle cx="1276" cy="508.5" r="3.5" fill="#45e2d2"/>
+  <text x="1290" y="513" class="small" style="fill:#cfd5dc"><tspan class="b">Sent</tspan> back to Discord when it came</text>
+  <text x="1290" y="532" class="small" style="fill:#cfd5dc">from there</text>
+  <circle cx="1276" cy="555.5" r="3.5" fill="#45e2d2"/>
+  <text x="1290" y="560" class="small" style="fill:#cfd5dc"><tspan class="b">Kept</tspan> in the history, a note in place of</text>
+  <text x="1290" y="579" class="small" style="fill:#cfd5dc">each picture; the memory review</text>
+  <text x="1290" y="598" class="small" style="fill:#cfd5dc">comes later</text>
+
+  <!-- footer -->
+  <path class="ln" d="M48 1038L1552 1038" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="48" y="1064" class="foot">ORION  ·  2026-10-11</text>
+  <circle cx="1106.5" cy="1059.5" r="5" fill="#ff893b"/>
+  <text x="1116.5" y="1064" class="legend">you</text>
+  <circle cx="1171.7" cy="1059.5" r="5" fill="#6dcaf8"/>
+  <text x="1181.7" y="1064" class="legend">Orion</text>
+  <circle cx="1248.4" cy="1059.5" r="5" fill="#cc70f2"/>
+  <text x="1258.4" y="1064" class="legend">thinking</text>
+  <circle cx="1342.9" cy="1059.5" r="5" fill="#45e2d2"/>
+  <text x="1352.9" y="1064" class="legend">speaking</text>
+  <circle cx="1443.2" cy="1059.5" r="5" fill="#ff5251"/>
+  <text x="1453.2" y="1064" class="legend">asks you first</text>
+</svg>

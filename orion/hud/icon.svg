@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>ORION</title>
+  <rect width="32" height="32" rx="6" fill="#0b0606"/>
+  <g fill="none" stroke="#ff3b46" stroke-linejoin="miter">
+    <path d="M16 1.8 28.2 8.9v14.2L16 30.2 3.8 23.1V8.9Z" stroke-width="1.5"/>
+    <path d="M10.8 9.4v13.2M21.2 9.4v13.2M10.8 16h10.4" stroke-width="2.4"/>
+    <path d="M6.6 16h1.6M23.8 16h1.6" stroke-width="1.5"/>
+  </g>
+</svg>

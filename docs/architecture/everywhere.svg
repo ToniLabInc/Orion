@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1408" viewBox="0 0 1600 1408" role="img" aria-labelledby="title desc" font-family="Geist, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif">
+  <title id="title">Runs anywhere</title>
+  <desc id="desc">The same ORION in three places, side by side, with what provides each capability. Natively on a Linux desktop or laptop, the machine itself provides the microphone and speakers, the desktop tools (xdg-open, wpctl or pactl, D-Bus, systemd), screenshots through the desktop's portal, the clipboard through pyperclip, and Whisper on the GPU. In Docker on a headless server there is no sound or desktop, so the host profile hides those tools, and the HUD in your browser, reached through an SSH tunnel or HTTPS, carries the microphone, speakers, screen, camera and clipboard; Claude Code runs inside the image with CLAUDE_CODE_OAUTH_TOKEN, a browser runs in a sidecar container, and integrations run through uvx. In Docker Desktop on macOS or Windows, host networking is turned on and the browser is the device. The host profile decides which tools exist; surfaces bring your own devices.</desc>
+  <style>
+    .cm{font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace;font-weight:450}
+    .b{font-weight:600}
+    .eyebrow{font-size:13px;fill:#99dbfe;font-weight:600;letter-spacing:0.32em}
+    .title{font-size:34px;fill:#f4f7fb;font-weight:600;letter-spacing:-0.01em}
+    .subtitle{font-size:16.5px;fill:#b1b8c2}
+    .colhead{font-size:13px;fill:#b1b8c2;font-weight:600;letter-spacing:0.2em}
+    .name{font-size:16px;fill:#f4f7fb;font-weight:600}
+    .big{font-size:19px;fill:#f4f7fb;font-weight:600}
+    .body{font-size:14px;fill:#cfd5dc}
+    .bodyb{font-size:14px;fill:#e6eaf0;font-weight:600}
+    .small{font-size:13px;fill:#b1b8c2}
+    .smallb{font-size:13px;fill:#cfd5dc;font-weight:600}
+    .muted{font-size:13px;fill:#8f98a3}
+    .tag{font-size:13px;fill:#8f98a3;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .code{font-size:13px;fill:#cfd5dc;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .chip{font-size:13px;fill:#e6eaf0;font-weight:500}
+    .chipm{font-size:13px;fill:#e6eaf0;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .num{font-size:13px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .numbig{font-size:17px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .foot{font-size:13px;fill:#8f98a3;font-weight:500;letter-spacing:0.16em}
+    .legend{font-size:13px;fill:#b1b8c2}
+    .arrowlabel{font-size:13px;fill:#b1b8c2;font-weight:500}
+    .ln{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090e1c"/><stop offset="0.55" stop-color="#060c19"/>
+      <stop offset="1" stop-color="#02040c"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#6dcaf8" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#6dcaf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121b2c" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#0b1423" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18233a" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#111a2c" stop-opacity="0.97"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ah-betel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ff893b"/>
+    </marker>
+  </defs>
+
+  <!-- deep space -->
+  <rect width="1600" height="1408" fill="url(#space)"/>
+  <g fill="#dfe8ff">
+    <circle cx="611.5" cy="329.2" r="0.7" fill-opacity="0.39"/>
+    <circle cx="618.8" cy="1255.8" r="0.8" fill-opacity="0.29"/>
+    <circle cx="615.5" cy="1026.4" r="1.1" fill-opacity="0.12"/>
+    <circle cx="402.5" cy="1397" r="0.6" fill-opacity="0.25"/>
+    <circle cx="253.6" cy="216.6" r="0.8" fill-opacity="0.17"/>
+    <circle cx="1045" cy="872.1" r="0.6" fill-opacity="0.16"/>
+    <circle cx="939" cy="610.2" r="0.8" fill-opacity="0.37"/>
+    <circle cx="349.9" cy="1018.9" r="0.9" fill-opacity="0.16"/>
+    <circle cx="1069.2" cy="180.3" r="0.7" fill-opacity="0.33"/>
+    <circle cx="1560.3" cy="82.5" r="0.8" fill-opacity="0.19"/>
+    <circle cx="49.3" cy="812.3" r="0.9" fill-opacity="0.39"/>
+    <circle cx="1348.9" cy="427.6" r="0.7" fill-opacity="0.15"/>
+    <circle cx="156.1" cy="37.9" r="0.9" fill-opacity="0.38"/>
+    <circle cx="373" cy="127.5" r="0.6" fill-opacity="0.26"/>
+    <circle cx="1161.5" cy="600.5" r="0.8" fill-opacity="0.28"/>
+    <circle cx="1402.5" cy="919.9" r="0.8" fill-opacity="0.17"/>
+    <circle cx="1286.5" cy="1005" r="0.6" fill-opacity="0.42"/>
+    <circle cx="1125" cy="1253.6" r="0.9" fill-opacity="0.32"/>
+    <circle cx="1195.4" cy="855.8" r="0.9" fill-opacity="0.30"/>
+    <circle cx="165.6" cy="1323.8" r="0.7" fill-opacity="0.25"/>
+    <circle cx="1169.7" cy="954.5" r="0.9" fill-opacity="0.36"/>
+    <circle cx="139.5" cy="938.6" r="1.1" fill-opacity="0.18"/>
+    <circle cx="1094.8" cy="393.5" r="0.8" fill-opacity="0.36"/>
+    <circle cx="994.3" cy="1104.4" r="0.8" fill-opacity="0.35"/>
+    <circle cx="1167.5" cy="306.3" r="0.7" fill-opacity="0.18"/>
+    <circle cx="365.3" cy="660.5" r="0.7" fill-opacity="0.14"/>
+    <circle cx="383.7" cy="797.3" r="0.7" fill-opacity="0.27"/>
+    <circle cx="201.2" cy="542.8" r="0.6" fill-opacity="0.37"/>
+    <circle cx="716.4" cy="1037.9" r="0.7" fill-opacity="0.29"/>
+    <circle cx="796.5" cy="1359.2" r="0.8" fill-opacity="0.37"/>
+    <circle cx="55.3" cy="828.6" r="0.7" fill-opacity="0.31"/>
+    <circle cx="820.6" cy="912.4" r="0.7" fill-opacity="0.24"/>
+    <circle cx="1548.7" cy="1346.4" r="0.6" fill-opacity="0.27"/>
+    <circle cx="950.8" cy="498" r="0.9" fill-opacity="0.40"/>
+    <circle cx="1443.4" cy="436.4" r="0.7" fill-opacity="0.20"/>
+    <circle cx="609.5" cy="329" r="0.6" fill-opacity="0.38"/>
+    <circle cx="450.6" cy="825.6" r="0.8" fill-opacity="0.24"/>
+    <circle cx="786.5" cy="1192.4" r="0.6" fill-opacity="0.27"/>
+    <circle cx="949.1" cy="332.4" r="0.7" fill-opacity="0.39"/>
+    <circle cx="469.6" cy="351.9" r="0.9" fill-opacity="0.40"/>
+    <circle cx="1316.4" cy="83.6" r="1.1" fill-opacity="0.13"/>
+    <circle cx="1211.7" cy="280" r="0.9" fill-opacity="0.22"/>
+    <circle cx="588.8" cy="247.8" r="0.6" fill-opacity="0.19"/>
+    <circle cx="1390.5" cy="723.2" r="0.7" fill-opacity="0.13"/>
+    <circle cx="942.8" cy="530.1" r="0.7" fill-opacity="0.37"/>
+    <circle cx="437.1" cy="41.2" r="1.1" fill-opacity="0.34"/>
+    <circle cx="619.1" cy="267.2" r="1.1" fill-opacity="0.22"/>
+    <circle cx="816.3" cy="264.5" r="0.6" fill-opacity="0.29"/>
+    <circle cx="1149.7" cy="272" r="0.7" fill-opacity="0.20"/>
+    <circle cx="146.3" cy="924.9" r="0.9" fill-opacity="0.13"/>
+    <circle cx="499.7" cy="431.8" r="0.6" fill-opacity="0.28"/>
+    <circle cx="1421.5" cy="451.7" r="0.9" fill-opacity="0.35"/>
+    <circle cx="597.6" cy="1114.5" r="0.6" fill-opacity="0.14"/>
+    <circle cx="624.4" cy="231.3" r="0.9" fill-opacity="0.17"/>
+    <circle cx="260.1" cy="132.4" r="0.6" fill-opacity="0.21"/>
+    <circle cx="1438.5" cy="443.7" r="0.6" fill-opacity="0.18"/>
+    <circle cx="1437.5" cy="1363.3" r="0.6" fill-opacity="0.39"/>
+    <circle cx="1456.3" cy="1349.6" r="0.8" fill-opacity="0.28"/>
+    <circle cx="1488" cy="389.1" r="0.7" fill-opacity="0.35"/>
+    <circle cx="1390.6" cy="1081.8" r="0.9" fill-opacity="0.27"/>
+    <circle cx="408" cy="962.9" r="1.1" fill-opacity="0.33"/>
+    <circle cx="915" cy="232.6" r="0.7" fill-opacity="0.36"/>
+    <circle cx="48.4" cy="392" r="0.6" fill-opacity="0.18"/>
+    <circle cx="1061.2" cy="399.7" r="0.8" fill-opacity="0.40"/>
+    <circle cx="470.9" cy="406" r="0.6" fill-opacity="0.37"/>
+    <circle cx="1583.9" cy="433.1" r="0.9" fill-opacity="0.38"/>
+    <circle cx="874.9" cy="1008.6" r="0.8" fill-opacity="0.31"/>
+    <circle cx="378.1" cy="1301.3" r="0.9" fill-opacity="0.30"/>
+    <circle cx="1060.6" cy="592.5" r="0.7" fill-opacity="0.13"/>
+    <circle cx="329.1" cy="420.4" r="0.8" fill-opacity="0.13"/>
+  </g>
+
+  <!-- title -->
+  <text x="48" y="66" class="eyebrow">ORION  ·  ARCHITECTURE  ·  3 OF 4</text>
+  <text x="48" y="110" class="title">Runs anywhere</text>
+  <text x="48" y="142" class="subtitle">The same Orion on a desktop, a headless server or Docker Desktop. What provides each capability, in each place.</text>
+  <rect x="280" y="180" width="416" height="1124" rx="20" fill="url(#panel)" stroke="#b1b8c2" stroke-opacity="0.15"/>
+  <rect x="300" y="180.5" width="376" height="1" fill="url(#rim)"/>
+  <rect x="712" y="180" width="416" height="1124" rx="20" fill="url(#panel)" stroke="#b1b8c2" stroke-opacity="0.15"/>
+  <rect x="732" y="180.5" width="376" height="1" fill="url(#rim)"/>
+  <rect x="1144" y="180" width="416" height="1124" rx="20" fill="url(#panel)" stroke="#b1b8c2" stroke-opacity="0.15"/>
+  <rect x="1164" y="180.5" width="376" height="1" fill="url(#rim)"/>
+
+  <!-- scene 1: Native, a Linux desktop or laptop -->
+  <text x="298" y="216" class="big">Native</text>
+  <text x="372.4" y="216" class="body" style="fill:#b1b8c2">a Linux desktop or laptop</text>
+  <text x="298" y="240" class="small" style="fill:#8f98a3"><tspan class="cm">./install.sh</tspan>, then <tspan class="cm">orion start</tspan></text>
+  <rect x="296" y="260" width="384" height="172" rx="14" fill="#02040c" fill-opacity="0.55" stroke="#b1b8c2" stroke-opacity="0.30"/>
+  <g transform="translate(308 270) scale(0.75)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="3.5" width="19" height="13" rx="2"/>
+    <path d="M9 21h6M12 16.5V21"/>
+  </g>
+  <text x="334" y="284" class="small" style="fill:#cfd5dc">your Linux PC</text>
+  <text x="668" y="284" class="muted" text-anchor="end">a systemd user service</text>
+  <rect x="312" y="302" width="132" height="44" rx="10" fill="none" stroke="#6dcaf8" stroke-opacity="0.40" stroke-width="3" filter="url(#glow)"/>
+  <rect x="312" y="302" width="132" height="44" rx="10" fill="#14243a" stroke="#6dcaf8" stroke-opacity="0.75"/>
+  <text x="378" y="329" class="smallb" text-anchor="middle" style="fill:#c5ebff">ORION</text>
+  <rect x="462" y="300" width="113.8" height="24" rx="12" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="472" y="316.6" class="chip" style="fill:#c5ebff">mic · speakers</text>
+  <rect x="583.8" y="300" width="74.2" height="24" rx="12" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="593.8" y="316.6" class="chip" style="fill:#c5ebff">desktop</text>
+  <rect x="462" y="330" width="64.6" height="24" rx="12" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="472" y="346.6" class="chip" style="fill:#c5ebff">screen</text>
+  <rect x="534.6" y="330" width="48.4" height="24" rx="12" fill="#6dcaf8" fill-opacity="0.10" stroke="#6dcaf8" stroke-opacity="0.42"/>
+  <text x="544.6" y="346.6" class="chip" style="fill:#c5ebff">GPU</text>
+  <rect x="312" y="382" width="352" height="36" rx="10" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.55"/>
+  <g transform="translate(322 390) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 15.5V5.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5v2"/>
+    <path d="M1.5 19h11"/>
+    <rect x="15" y="10" width="7.5" height="11.5" rx="1.6"/>
+    <path d="M18 19h1.5"/>
+  </g>
+  <text x="350" y="405" class="small" style="fill:#fec6a8">a HUD in a browser here, at localhost</text>
+  <path class="ln" d="M378 378L378 352" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)" marker-start="url(#ah-betel)"/>
+
+  <!-- scene 2: Docker, a headless server -->
+  <text x="730" y="216" class="big">Docker</text>
+  <text x="810.9" y="216" class="body" style="fill:#b1b8c2">a headless server</text>
+  <text x="730" y="240" class="small" style="fill:#8f98a3"><tspan class="cm">./docker/up.sh</tspan></text>
+  <rect x="728" y="260" width="384" height="110" rx="14" fill="#02040c" fill-opacity="0.55" stroke="#b1b8c2" stroke-opacity="0.30"/>
+  <g transform="translate(740 270) scale(0.75)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3.5" width="18" height="7" rx="1.8"/>
+    <rect x="3" y="13.5" width="18" height="7" rx="1.8"/>
+    <path d="M7 7h.01M7 17h.01" stroke-width="2.4"/>
+  </g>
+  <text x="766" y="284" class="small" style="fill:#cfd5dc">the server</text>
+  <text x="1100" y="284" class="muted" text-anchor="end">no sound, no desktop</text>
+  <rect x="742" y="296" width="168" height="62" rx="12" fill="none" stroke="#b1b8c2" stroke-opacity="0.45" stroke-dasharray="4 4"/>
+  <text x="754" y="316" class="tag" style="fill:#8f98a3">orion</text>
+  <rect x="758" y="320" width="136" height="36" rx="10" fill="none" stroke="#6dcaf8" stroke-opacity="0.40" stroke-width="3" filter="url(#glow)"/>
+  <rect x="758" y="320" width="136" height="36" rx="10" fill="#14243a" stroke="#6dcaf8" stroke-opacity="0.75"/>
+  <text x="826" y="343" class="smallb" text-anchor="middle" style="fill:#c5ebff">ORION</text>
+  <rect x="924" y="296" width="174" height="62" rx="12" fill="none" stroke="#b1b8c2" stroke-opacity="0.45" stroke-dasharray="4 4"/>
+  <text x="936" y="316" class="tag" style="fill:#8f98a3">browser</text>
+  <text x="1011" y="337" class="small" text-anchor="middle" style="fill:#b1b8c2">Chromium,</text>
+  <text x="1011" y="355" class="small" text-anchor="middle" style="fill:#b1b8c2">headless</text>
+  <rect x="728" y="396" width="196" height="36" rx="10" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.55"/>
+  <g transform="translate(738 404) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 15.5V5.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5v2"/>
+    <path d="M1.5 19h11"/>
+    <rect x="15" y="10" width="7.5" height="11.5" rx="1.6"/>
+    <path d="M18 19h1.5"/>
+  </g>
+  <text x="766" y="419" class="small" style="fill:#fec6a8">your laptop or phone</text>
+  <path class="ln" d="M826 390L826 350" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" stroke-dasharray="5 4" marker-end="url(#ah-betel)" marker-start="url(#ah-betel)"/>
+  <text x="942" y="419" class="small" style="fill:#fec6a8">an SSH tunnel, or HTTPS</text>
+
+  <!-- scene 3: Docker Desktop, macOS or Windows -->
+  <text x="1162" y="216" class="big">Docker Desktop</text>
+  <text x="1330.8" y="216" class="body" style="fill:#b1b8c2">macOS or Windows</text>
+  <text x="1162" y="240" class="small" style="fill:#8f98a3"><tspan class="cm">docker compose up -d --build</tspan></text>
+  <rect x="1160" y="260" width="384" height="172" rx="14" fill="#02040c" fill-opacity="0.55" stroke="#b1b8c2" stroke-opacity="0.30"/>
+  <g transform="translate(1172 270) scale(0.75)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="3.5" width="19" height="13" rx="2"/>
+    <path d="M9 21h6M12 16.5V21"/>
+  </g>
+  <text x="1198" y="284" class="small" style="fill:#cfd5dc">your Mac or Windows PC</text>
+  <text x="1532" y="284" class="muted" text-anchor="end">host networking on</text>
+  <rect x="1174" y="298" width="168" height="120" rx="12" fill="none" stroke="#b1b8c2" stroke-opacity="0.45" stroke-dasharray="4 4"/>
+  <text x="1186" y="318" class="tag" style="fill:#8f98a3">Docker Desktop</text>
+  <rect x="1190" y="351" width="136" height="38" rx="10" fill="none" stroke="#6dcaf8" stroke-opacity="0.40" stroke-width="3" filter="url(#glow)"/>
+  <rect x="1190" y="351.0" width="136" height="38" rx="10" fill="#14243a" stroke="#6dcaf8" stroke-opacity="0.75"/>
+  <text x="1258" y="375" class="smallb" text-anchor="middle" style="fill:#c5ebff">ORION</text>
+  <rect x="1382" y="352.0" width="148" height="36" rx="10" fill="#ff893b" fill-opacity="0.10" stroke="#ff893b" stroke-opacity="0.55"/>
+  <g transform="translate(1392 360) scale(0.833333)" stroke="#ffa873" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 15.5V5.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5v2"/>
+    <path d="M1.5 19h11"/>
+    <rect x="15" y="10" width="7.5" height="11.5" rx="1.6"/>
+    <path d="M18 19h1.5"/>
+  </g>
+  <text x="1420" y="375" class="small" style="fill:#fec6a8">your browser</text>
+  <path class="ln" d="M1376 370L1332 370" stroke="#ff893b" stroke-width="1.8" stroke-opacity="0.90" marker-end="url(#ah-betel)" marker-start="url(#ah-betel)"/>
+  <text x="1456" y="411" class="muted" text-anchor="middle">at localhost:8765</text>
+
+  <!-- capabilities, section by section -->
+  <circle cx="44" cy="478.5" r="4" fill="#8f98a3"/>
+  <text x="56" y="483" class="colhead" style="fill:#b1b8c2">SENSES</text>
+  <path class="ln" d="M40 490L1560 490" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <g transform="translate(40 505) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2.5" width="6" height="11.5" rx="3"/>
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0"/>
+    <path d="M12 17.5V21.5M8.5 21.5h7"/>
+  </g>
+  <text x="70" y="521" class="bodyb">Voice</text>
+  <text x="70" y="540" class="muted">microphone and speakers</text>
+  <rect x="288" y="496" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="515.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="520" class="small" style="fill:#e6eaf0">This machine's microphone and speakers (PipeWire or</text>
+  <text x="320" y="539" class="small" style="fill:#e6eaf0">PulseAudio); a HUD can take the voice too.</text>
+  <rect x="720" y="496" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="738" cy="515.5" r="4.5" fill="#ff893b"/>
+  <text x="752" y="520" class="small" style="fill:#e6eaf0">The HUD in your browser carries it: its microphone and</text>
+  <text x="752" y="539" class="small" style="fill:#e6eaf0">speakers, over <tspan class="cm">/ws</tspan>.</text>
+  <rect x="1152" y="496" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="515.5" r="4.5" fill="#ff893b"/>
+  <text x="1184" y="520" class="small" style="fill:#e6eaf0">The browser carries it: press talk, or say his</text>
+  <text x="1184" y="539" class="small" style="fill:#e6eaf0">name there.</text>
+  <g transform="translate(40 573) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="6" y="6" width="12" height="12" rx="1.6"/>
+    <path d="M9 2.5v3.5M15 2.5v3.5M9 18v3.5M15 18v3.5M2.5 9h3.5M2.5 15h3.5M18 9h3.5M18 15h3.5"/>
+  </g>
+  <text x="70" y="589" class="bodyb">Ears</text>
+  <text x="70" y="608" class="muted">speech recognition</text>
+  <rect x="288" y="564" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="583.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="588" class="small" style="fill:#e6eaf0">Whisper on the GPU (<tspan class="cm">large-v3-turbo</tspan>), or on the CPU.</text>
+  <rect x="720" y="564" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="738" cy="583.5" r="4.5" fill="#6dcaf8"/>
+  <text x="752" y="588" class="small" style="fill:#e6eaf0">On an NVIDIA GPU through the container toolkit, else</text>
+  <text x="752" y="607" class="small" style="fill:#e6eaf0">on the CPU (<tspan class="cm">small.en</tspan>).</text>
+  <rect x="1152" y="564" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="583.5" r="4.5" fill="#6dcaf8"/>
+  <text x="1184" y="588" class="small" style="fill:#e6eaf0">On the CPU (<tspan class="cm">small.en</tspan>).</text>
+  <g transform="translate(40 641) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </g>
+  <text x="70" y="657" class="bodyb">Eyes</text>
+  <text x="70" y="676" class="muted">the screen, a camera</text>
+  <rect x="288" y="632" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="651.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="656" class="small" style="fill:#e6eaf0">This screen, through the desktop's screenshot portal; a</text>
+  <text x="320" y="675" class="small" style="fill:#e6eaf0">HUD can share its own screen or camera.</text>
+  <rect x="720" y="632" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="738" cy="651.5" r="4.5" fill="#ff893b"/>
+  <text x="752" y="656" class="small" style="fill:#e6eaf0">Your HUD shares its screen or camera, once you</text>
+  <text x="752" y="675" class="small" style="fill:#e6eaf0">click Share.</text>
+  <rect x="1152" y="632" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="651.5" r="4.5" fill="#ff893b"/>
+  <text x="1184" y="656" class="small" style="fill:#e6eaf0">Your HUD shares its screen or camera, once you</text>
+  <text x="1184" y="675" class="small" style="fill:#e6eaf0">click Share.</text>
+  <g transform="translate(40 709) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="4.5" width="14" height="17" rx="2"/>
+    <rect x="8.5" y="2.5" width="7" height="4" rx="1.2"/>
+  </g>
+  <text x="70" y="725" class="bodyb">Clipboard</text>
+  <rect x="288" y="700" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="719.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="724" class="small" style="fill:#e6eaf0">This machine's, through pyperclip (wl-clipboard, xclip</text>
+  <text x="320" y="743" class="small" style="fill:#e6eaf0">or xsel).</text>
+  <rect x="720" y="700" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="738" cy="719.5" r="4.5" fill="#ff893b"/>
+  <text x="752" y="724" class="small" style="fill:#e6eaf0">Your HUD's clipboard; the browser asks you once.</text>
+  <rect x="1152" y="700" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="719.5" r="4.5" fill="#ff893b"/>
+  <text x="1184" y="724" class="small" style="fill:#e6eaf0">Your HUD's clipboard; the browser asks you once.</text>
+  <circle cx="44" cy="786.5" r="4" fill="#8f98a3"/>
+  <text x="56" y="791" class="colhead" style="fill:#b1b8c2">HANDS</text>
+  <path class="ln" d="M40 798L1560 798" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <g transform="translate(40 813) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="3.5" width="19" height="13" rx="2"/>
+    <path d="M9 21h6M12 16.5V21"/>
+  </g>
+  <text x="70" y="829" class="bodyb">Desktop tools</text>
+  <text x="70" y="848" class="muted">apps, volume, media,</text>
+  <text x="70" y="867" class="muted">lock, power</text>
+  <rect x="288" y="804" width="400" height="79" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="823.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="828" class="small" style="fill:#e6eaf0"><tspan class="cm">xdg-open</tspan> for apps, files and links, <tspan class="cm">wpctl</tspan> or <tspan class="cm">pactl</tspan></text>
+  <text x="320" y="847" class="small" style="fill:#e6eaf0">for the volume, D-Bus for media and the lock,</text>
+  <text x="320" y="866" class="small" style="fill:#e6eaf0">systemd for power.</text>
+  <rect x="720" y="804" width="400" height="79" rx="10" fill="none" stroke="#8f98a3" stroke-opacity="0.35" stroke-dasharray="4 4"/>
+  <circle cx="738" cy="823.5" r="4.5" fill="none" stroke="#8f98a3" stroke-width="1.4" stroke-dasharray="2 2"/>
+  <text x="752" y="828" class="small" style="fill:#8f98a3">Not offered: no desktop, sound server or logind. The</text>
+  <text x="752" y="847" class="small" style="fill:#8f98a3">Abilities page says why.</text>
+  <rect x="1152" y="804" width="400" height="79" rx="10" fill="none" stroke="#8f98a3" stroke-opacity="0.35" stroke-dasharray="4 4"/>
+  <circle cx="1170" cy="823.5" r="4.5" fill="none" stroke="#8f98a3" stroke-width="1.4" stroke-dasharray="2 2"/>
+  <text x="1184" y="828" class="small" style="fill:#8f98a3">Not offered: the container has no desktop to act on.</text>
+  <g transform="translate(40 900) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/>
+  </g>
+  <text x="70" y="916" class="bodyb">Browser control</text>
+  <text x="70" y="935" class="muted">Playwright</text>
+  <rect x="288" y="891" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="910.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="915" class="small" style="fill:#e6eaf0">Your own Chrome through the Playwright extension, or</text>
+  <text x="320" y="934" class="small" style="fill:#e6eaf0">a window of his own.</text>
+  <rect x="720" y="891" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="738" cy="910.5" r="4.5" fill="#6dcaf8"/>
+  <text x="752" y="915" class="small" style="fill:#e6eaf0">The <tspan class="cm">browser</tspan> sidecar container: headless Chromium</text>
+  <text x="752" y="934" class="small" style="fill:#e6eaf0">on <tspan class="cm">127.0.0.1:8931</tspan>.</text>
+  <rect x="1152" y="891" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="910.5" r="4.5" fill="#6dcaf8"/>
+  <text x="1184" y="915" class="small" style="fill:#e6eaf0">The <tspan class="cm">browser</tspan> sidecar container (<tspan class="cm">--profile browser</tspan>).</text>
+  <g transform="translate(40 968) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 2.5v5M15 2.5v5"/>
+    <path d="M6 7.5h12v4a6 6 0 0 1-12 0z"/>
+    <path d="M12 17.5v4"/>
+  </g>
+  <text x="70" y="984" class="bodyb">Integrations</text>
+  <text x="70" y="1003" class="muted">mail, Google,</text>
+  <text x="70" y="1022" class="muted">Microsoft, Discord</text>
+  <rect x="288" y="959" width="400" height="70" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="978.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="983" class="small" style="fill:#e6eaf0">MCP servers run with <tspan class="cm">uvx</tspan> (Node ones</text>
+  <text x="320" y="1002" class="small" style="fill:#e6eaf0">through <tspan class="cm">nodejs-wheel</tspan>).</text>
+  <rect x="720" y="959" width="400" height="70" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="738" cy="978.5" r="4.5" fill="#6dcaf8"/>
+  <text x="752" y="983" class="small" style="fill:#e6eaf0"><tspan class="cm">uvx</tspan> inside the container; downloads kept in the</text>
+  <text x="752" y="1002" class="small" style="fill:#e6eaf0"><tspan class="cm">uv-cache</tspan> volume.</text>
+  <rect x="1152" y="959" width="400" height="70" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="978.5" r="4.5" fill="#6dcaf8"/>
+  <text x="1184" y="983" class="small" style="fill:#e6eaf0"><tspan class="cm">uvx</tspan> inside the container; downloads kept in the</text>
+  <text x="1184" y="1002" class="small" style="fill:#e6eaf0"><tspan class="cm">uv-cache</tspan> volume.</text>
+  <circle cx="44" cy="1055.5" r="4" fill="#8f98a3"/>
+  <text x="56" y="1060" class="colhead" style="fill:#b1b8c2">BRAIN, DATA, ACCESS</text>
+  <path class="ln" d="M40 1067L1560 1067" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <g transform="translate(40 1082) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/>
+  </g>
+  <text x="70" y="1098" class="bodyb">Brain</text>
+  <text x="70" y="1117" class="muted">your Claude plan</text>
+  <rect x="288" y="1073" width="400" height="79" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="1092.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="1097" class="small" style="fill:#e6eaf0">Claude Code, signed in with <tspan class="cm">claude</tspan> (your Pro or</text>
+  <text x="320" y="1116" class="small" style="fill:#e6eaf0">Max plan).</text>
+  <rect x="720" y="1073" width="400" height="79" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="738" cy="1092.5" r="4.5" fill="#6dcaf8"/>
+  <text x="752" y="1097" class="small" style="fill:#e6eaf0">Claude Code inside the image, signed in</text>
+  <text x="752" y="1116" class="small" style="fill:#e6eaf0">with <tspan class="cm">CLAUDE_CODE_OAUTH_TOKEN</tspan> from</text>
+  <text x="752" y="1135" class="small" style="fill:#e6eaf0"><tspan class="cm">claude setup-token</tspan>.</text>
+  <rect x="1152" y="1073" width="400" height="79" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="1092.5" r="4.5" fill="#6dcaf8"/>
+  <text x="1184" y="1097" class="small" style="fill:#e6eaf0">Claude Code inside the image, with</text>
+  <text x="1184" y="1116" class="small" style="fill:#e6eaf0"><tspan class="cm">CLAUDE_CODE_OAUTH_TOKEN</tspan> in <tspan class="cm">.env</tspan>.</text>
+  <g transform="translate(40 1169) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="12" cy="5.5" rx="8" ry="3"/>
+    <path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/>
+    <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>
+  </g>
+  <text x="70" y="1185" class="bodyb">His data</text>
+  <text x="70" y="1204" class="muted">memory, settings, models</text>
+  <rect x="288" y="1160" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="306" cy="1179.5" r="4.5" fill="#6dcaf8"/>
+  <text x="320" y="1184" class="small" style="fill:#e6eaf0"><tspan class="cm">data/</tspan> in the repo folder.</text>
+  <rect x="720" y="1160" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="738" cy="1179.5" r="4.5" fill="#6dcaf8"/>
+  <text x="752" y="1184" class="small" style="fill:#e6eaf0">The <tspan class="cm">data</tspan> volume at <tspan class="cm">/app/data</tspan>, or a folder of</text>
+  <text x="752" y="1203" class="small" style="fill:#e6eaf0">yours (<tspan class="cm">ORION_DATA</tspan>).</text>
+  <rect x="1152" y="1160" width="400" height="60" rx="10" fill="#6dcaf8" fill-opacity="0.07" stroke="#6dcaf8" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="1179.5" r="4.5" fill="#6dcaf8"/>
+  <text x="1184" y="1184" class="small" style="fill:#e6eaf0">The <tspan class="cm">data</tspan> volume at <tspan class="cm">/app/data</tspan>.</text>
+  <g transform="translate(40 1237) scale(0.833333)" stroke="#b1b8c2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 14a4.2 4.2 0 0 0 6 0l3-3a4.2 4.2 0 0 0-6-6l-1 1"/>
+    <path d="M14 10a4.2 4.2 0 0 0-6 0l-3 3a4.2 4.2 0 0 0 6 6l1-1"/>
+  </g>
+  <text x="70" y="1253" class="bodyb">Opening the HUD</text>
+  <rect x="288" y="1228" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="306" cy="1247.5" r="4.5" fill="#ff893b"/>
+  <text x="320" y="1252" class="small" style="fill:#e6eaf0"><tspan class="cm">http://localhost:8765</tspan>; a phone or tablet pairs</text>
+  <text x="320" y="1271" class="small" style="fill:#e6eaf0">with a code.</text>
+  <rect x="720" y="1228" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="738" cy="1247.5" r="4.5" fill="#ff893b"/>
+  <text x="752" y="1252" class="small" style="fill:#e6eaf0">An SSH tunnel to the server's loopback, or HTTPS on</text>
+  <text x="752" y="1271" class="small" style="fill:#e6eaf0">your network (a certificate, then pairing).</text>
+  <rect x="1152" y="1228" width="400" height="60" rx="10" fill="#ff893b" fill-opacity="0.09" stroke="#ff893b" stroke-opacity="0.22"/>
+  <circle cx="1170" cy="1247.5" r="4.5" fill="#ff893b"/>
+  <text x="1184" y="1252" class="small" style="fill:#e6eaf0"><tspan class="cm">http://localhost:8765</tspan>, once Docker Desktop's</text>
+  <text x="1184" y="1271" class="small" style="fill:#e6eaf0">host networking is on.</text>
+
+  <!-- key: who provides a capability -->
+  <circle cx="44" cy="211.5" r="4" fill="#8f98a3"/>
+  <text x="56" y="216" class="colhead" style="fill:#b1b8c2">KEY</text>
+  <circle cx="46" cy="247.5" r="5.5" fill="#6dcaf8"/>
+  <text x="60" y="252" class="bodyb">the machine he runs on</text>
+  <text x="60" y="273" class="small">The host profile decides</text>
+  <text x="60" y="292" class="small">which tools exist.</text>
+  <circle cx="46" cy="318.5" r="5.5" fill="#ff893b"/>
+  <text x="60" y="323" class="bodyb">your browser</text>
+  <text x="60" y="344" class="small">Surfaces bring your</text>
+  <text x="60" y="363" class="small">own devices.</text>
+  <circle cx="46" cy="389.5" r="5" fill="none" stroke="#8f98a3" stroke-width="1.4" stroke-dasharray="2 2"/>
+  <text x="60" y="394" class="bodyb">not offered here</text>
+  <text x="60" y="415" class="small">Hidden by the host profile;</text>
+  <text x="60" y="434" class="small">the rest works the same.</text>
+
+  <!-- footer -->
+  <path class="ln" d="M48 1348L1552 1348" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="48" y="1374" class="foot">ORION  ·  2026-10-11</text>
+</svg>

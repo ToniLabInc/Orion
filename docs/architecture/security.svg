@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1372" viewBox="0 0 1600 1372" role="img" aria-labelledby="title desc" font-family="Geist, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif">
+  <title id="title">Security</title>
+  <desc id="desc">How ORION is kept from abusing the machine he has full access to. Nothing depends on the model behaving. A call from a place (voice, the HUD, Discord, a scheduled job, another app) passes one door, the hub, which refuses what that place may never do whatever anyone says, blocks any call whose arguments hold a secret, asks for your yes after untrusted content or where a place says to, and records everything in the activity log. What runs is boxed: commands in a bubblewrap sandbox with a clean environment, connectors with only their own secrets (those nobody reviewed in the sandbox too), the file tools away from what the sandbox hides. Every result passes the redactor before the model, the HUD, Discord, logs, memory or the activity log receives it. Secrets live in the vault (the system keyring, or private files in a container), and config.yaml holds only references. Limits only you can lift: channel limits, installs that ask you, switches that go off but never on, safety and secrets the AI can't change, answers it can't give for you, the HUD that answers this PC alone, other apps that count as untrusted, and the activity log.</desc>
+  <style>
+    .cm{font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace;font-weight:450}
+    .b{font-weight:600}
+    .eyebrow{font-size:13px;fill:#99dbfe;font-weight:600;letter-spacing:0.32em}
+    .title{font-size:34px;fill:#f4f7fb;font-weight:600;letter-spacing:-0.01em}
+    .subtitle{font-size:16.5px;fill:#b1b8c2}
+    .colhead{font-size:13px;fill:#b1b8c2;font-weight:600;letter-spacing:0.2em}
+    .name{font-size:16px;fill:#f4f7fb;font-weight:600}
+    .big{font-size:19px;fill:#f4f7fb;font-weight:600}
+    .body{font-size:14px;fill:#cfd5dc}
+    .bodyb{font-size:14px;fill:#e6eaf0;font-weight:600}
+    .small{font-size:13px;fill:#b1b8c2}
+    .smallb{font-size:13px;fill:#cfd5dc;font-weight:600}
+    .muted{font-size:13px;fill:#8f98a3}
+    .tag{font-size:13px;fill:#8f98a3;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .code{font-size:13px;fill:#cfd5dc;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .chip{font-size:13px;fill:#e6eaf0;font-weight:500}
+    .chipm{font-size:13px;fill:#e6eaf0;font-weight:450;font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace}
+    .num{font-size:13px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .numbig{font-size:17px;fill:#02040c;font-weight:700;text-anchor:middle}
+    .foot{font-size:13px;fill:#8f98a3;font-weight:500;letter-spacing:0.16em}
+    .legend{font-size:13px;fill:#b1b8c2}
+    .arrowlabel{font-size:13px;fill:#b1b8c2;font-weight:500}
+    .ln{fill:none;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <defs>
+    <linearGradient id="space" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090e1c"/><stop offset="0.55" stop-color="#060c19"/>
+      <stop offset="1" stop-color="#02040c"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#6dcaf8" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#6dcaf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121b2c" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#0b1423" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18233a" stop-opacity="0.97"/>
+      <stop offset="1" stop-color="#111a2c" stop-opacity="0.97"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ah-alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ff5251"/>
+    </marker>
+    <marker id="ah-dusk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#ebbd57"/>
+    </marker>
+    <marker id="ah-rigel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M1 1.2L9.2 5L1 8.8L3 5z" fill="#6dcaf8"/>
+    </marker>
+  </defs>
+
+
+  <!-- deep space -->
+  <rect width="1600" height="1372" fill="url(#space)"/>
+  <g fill="#dfe8ff">
+    <circle cx="75.4" cy="689.7" r="0.6" fill-opacity="0.19"/>
+    <circle cx="516.8" cy="559.8" r="0.9" fill-opacity="0.31"/>
+    <circle cx="1408.2" cy="30.7" r="0.7" fill-opacity="0.28"/>
+    <circle cx="965.3" cy="444.9" r="0.6" fill-opacity="0.32"/>
+    <circle cx="1157.3" cy="797.8" r="1.1" fill-opacity="0.20"/>
+    <circle cx="1033.8" cy="169.1" r="0.7" fill-opacity="0.16"/>
+    <circle cx="889.2" cy="186.5" r="1.1" fill-opacity="0.40"/>
+    <circle cx="817.3" cy="212.4" r="0.9" fill-opacity="0.23"/>
+    <circle cx="828.7" cy="262" r="0.8" fill-opacity="0.24"/>
+    <circle cx="352.7" cy="523.8" r="0.9" fill-opacity="0.25"/>
+    <circle cx="1498.9" cy="66.6" r="0.8" fill-opacity="0.25"/>
+    <circle cx="1213.1" cy="828" r="1.1" fill-opacity="0.29"/>
+    <circle cx="489.4" cy="1156.9" r="0.8" fill-opacity="0.23"/>
+    <circle cx="1029.2" cy="825" r="0.6" fill-opacity="0.26"/>
+    <circle cx="255.8" cy="72.6" r="0.9" fill-opacity="0.20"/>
+    <circle cx="262.8" cy="306.2" r="0.9" fill-opacity="0.19"/>
+    <circle cx="902" cy="50.3" r="0.6" fill-opacity="0.41"/>
+    <circle cx="75.5" cy="372.4" r="0.7" fill-opacity="0.37"/>
+    <circle cx="399.9" cy="1010" r="0.6" fill-opacity="0.29"/>
+    <circle cx="292.3" cy="132.1" r="0.9" fill-opacity="0.28"/>
+    <circle cx="292.6" cy="100.4" r="0.7" fill-opacity="0.28"/>
+    <circle cx="607.4" cy="200.4" r="0.9" fill-opacity="0.27"/>
+    <circle cx="1347.7" cy="281.7" r="0.9" fill-opacity="0.16"/>
+    <circle cx="179.1" cy="1141.2" r="0.7" fill-opacity="0.39"/>
+    <circle cx="56" cy="39" r="0.9" fill-opacity="0.38"/>
+    <circle cx="200.2" cy="672.1" r="0.8" fill-opacity="0.31"/>
+    <circle cx="308.2" cy="809" r="0.9" fill-opacity="0.24"/>
+    <circle cx="885.9" cy="220.4" r="0.8" fill-opacity="0.23"/>
+    <circle cx="637.7" cy="489.3" r="1.1" fill-opacity="0.12"/>
+    <circle cx="1108.1" cy="567.8" r="0.9" fill-opacity="0.16"/>
+    <circle cx="126" cy="988.5" r="0.6" fill-opacity="0.14"/>
+    <circle cx="1129.2" cy="61.5" r="0.6" fill-opacity="0.32"/>
+    <circle cx="1120.3" cy="850.3" r="0.7" fill-opacity="0.12"/>
+    <circle cx="62.1" cy="885.3" r="0.7" fill-opacity="0.34"/>
+    <circle cx="383.1" cy="33.4" r="1.1" fill-opacity="0.39"/>
+    <circle cx="640.5" cy="278.6" r="0.8" fill-opacity="0.33"/>
+    <circle cx="1194.9" cy="1098.3" r="1.1" fill-opacity="0.38"/>
+    <circle cx="1326.9" cy="1118.4" r="0.6" fill-opacity="0.27"/>
+    <circle cx="333" cy="747" r="0.6" fill-opacity="0.16"/>
+    <circle cx="988.6" cy="656" r="0.6" fill-opacity="0.39"/>
+    <circle cx="1531.7" cy="347.6" r="1.1" fill-opacity="0.32"/>
+    <circle cx="447.5" cy="981.2" r="0.8" fill-opacity="0.38"/>
+    <circle cx="295.7" cy="144.4" r="1.1" fill-opacity="0.40"/>
+    <circle cx="371.5" cy="544.9" r="0.7" fill-opacity="0.41"/>
+    <circle cx="226.6" cy="314.1" r="0.7" fill-opacity="0.23"/>
+    <circle cx="900.5" cy="923.2" r="0.8" fill-opacity="0.19"/>
+    <circle cx="1449.3" cy="213.7" r="0.8" fill-opacity="0.26"/>
+    <circle cx="396.2" cy="916.7" r="0.7" fill-opacity="0.19"/>
+    <circle cx="353.5" cy="801.6" r="0.8" fill-opacity="0.33"/>
+    <circle cx="912.1" cy="205.1" r="0.9" fill-opacity="0.24"/>
+    <circle cx="1541.4" cy="1135.7" r="0.8" fill-opacity="0.31"/>
+    <circle cx="1078.9" cy="442.9" r="0.6" fill-opacity="0.20"/>
+    <circle cx="1057.3" cy="804.3" r="0.7" fill-opacity="0.33"/>
+    <circle cx="1570.2" cy="124.9" r="0.7" fill-opacity="0.30"/>
+    <circle cx="535.2" cy="337.6" r="0.6" fill-opacity="0.21"/>
+    <circle cx="347.5" cy="86.6" r="0.6" fill-opacity="0.31"/>
+    <circle cx="850.1" cy="485.1" r="0.7" fill-opacity="0.33"/>
+    <circle cx="1436.7" cy="613.9" r="0.7" fill-opacity="0.31"/>
+    <circle cx="360.7" cy="861.8" r="0.9" fill-opacity="0.13"/>
+    <circle cx="948.2" cy="209.3" r="0.8" fill-opacity="0.30"/>
+    <circle cx="1324.2" cy="673.7" r="0.8" fill-opacity="0.28"/>
+    <circle cx="125.7" cy="409.9" r="0.7" fill-opacity="0.18"/>
+    <circle cx="795.4" cy="582.3" r="1.1" fill-opacity="0.12"/>
+    <circle cx="1548.9" cy="736.6" r="0.9" fill-opacity="0.13"/>
+    <circle cx="359.5" cy="316.2" r="0.7" fill-opacity="0.17"/>
+    <circle cx="371.4" cy="312.4" r="0.9" fill-opacity="0.18"/>
+    <circle cx="527.3" cy="645.5" r="0.9" fill-opacity="0.34"/>
+    <circle cx="152.7" cy="930.1" r="0.9" fill-opacity="0.35"/>
+    <circle cx="468.6" cy="996.6" r="0.8" fill-opacity="0.20"/>
+    <circle cx="678.4" cy="953.2" r="1.1" fill-opacity="0.20"/>
+    <circle cx="528.7" cy="1188.7" r="0.6" fill-opacity="0.14"/>
+    <circle cx="855.3" cy="1229.5" r="0.6" fill-opacity="0.38"/>
+    <circle cx="360.6" cy="1176.3" r="0.9" fill-opacity="0.14"/>
+    <circle cx="169.7" cy="1240.7" r="1.1" fill-opacity="0.16"/>
+    <circle cx="373.8" cy="1279.2" r="0.6" fill-opacity="0.29"/>
+    <circle cx="640.9" cy="1345.5" r="0.6" fill-opacity="0.28"/>
+    <circle cx="235.1" cy="1239.6" r="1.1" fill-opacity="0.15"/>
+    <circle cx="505.1" cy="1315.1" r="0.7" fill-opacity="0.15"/>
+    <circle cx="909.7" cy="1195.7" r="0.6" fill-opacity="0.28"/>
+    <circle cx="126.7" cy="1171.3" r="0.7" fill-opacity="0.26"/>
+    <circle cx="848.8" cy="1307.7" r="0.9" fill-opacity="0.29"/>
+    <circle cx="727.9" cy="1217.0" r="0.7" fill-opacity="0.32"/>
+    <circle cx="405.9" cy="1269.1" r="1.1" fill-opacity="0.26"/>
+    <circle cx="559.0" cy="1245.3" r="1.1" fill-opacity="0.40"/>
+    <circle cx="211.8" cy="1239.4" r="0.8" fill-opacity="0.16"/>
+    <circle cx="783.0" cy="1167.4" r="0.6" fill-opacity="0.34"/>
+    <circle cx="912.5" cy="1326.3" r="0.8" fill-opacity="0.22"/>
+    <circle cx="569.3" cy="1254.4" r="0.9" fill-opacity="0.14"/>
+    <circle cx="174.1" cy="1211.3" r="0.6" fill-opacity="0.14"/>
+    <circle cx="1110.3" cy="1283.0" r="0.9" fill-opacity="0.20"/>
+    <circle cx="624.1" cy="1287.0" r="0.6" fill-opacity="0.39"/>
+    <circle cx="577.4" cy="1276.1" r="0.9" fill-opacity="0.14"/>
+    <circle cx="1213.1" cy="1184.6" r="0.7" fill-opacity="0.24"/>
+    <circle cx="1441.9" cy="1254.3" r="0.7" fill-opacity="0.25"/>
+    <circle cx="876.1" cy="1327.8" r="0.9" fill-opacity="0.37"/>
+    <circle cx="458.8" cy="1238.9" r="0.8" fill-opacity="0.32"/>
+    <circle cx="615.9" cy="1203.8" r="0.6" fill-opacity="0.17"/>
+    <circle cx="387.2" cy="1204.3" r="0.9" fill-opacity="0.36"/>
+    <circle cx="310.8" cy="1213.6" r="0.7" fill-opacity="0.24"/>
+    <circle cx="598.7" cy="1267.6" r="0.7" fill-opacity="0.32"/>
+    <circle cx="823.9" cy="1277.3" r="0.6" fill-opacity="0.25"/>
+    <circle cx="1371.3" cy="1340.9" r="1.1" fill-opacity="0.23"/>
+    <circle cx="644.4" cy="1179.7" r="0.9" fill-opacity="0.14"/>
+    <circle cx="133.7" cy="1199.7" r="0.7" fill-opacity="0.15"/>
+  </g>
+
+  <!-- title -->
+  <text x="48" y="66" class="eyebrow">ORION  ·  ARCHITECTURE  ·  4 OF 4</text>
+  <text x="48" y="110" class="title">Security</text>
+  <text x="48" y="142" class="subtitle">He has full access to the machine, so nothing here depends on the model behaving: every call passes one door, secrets are kept where no model can reach, and what runs is boxed.</text>
+
+  <!-- a call, from a place to the PC -->
+  <rect x="40" y="176" width="1520" height="470" rx="22" fill="url(#panel)" stroke="#b1b8c2" stroke-opacity="0.15"/>
+  <rect x="62" y="176.5" width="1476" height="1" fill="url(#rim)"/>
+  <circle cx="68" cy="207.5" r="4" fill="#6dcaf8"/>
+  <text x="80" y="212" class="colhead" style="fill:#99dbfe">A CALL, FROM A PLACE TO THE PC</text>
+  <text x="1536" y="212" class="tag" style="fill:#8f98a3" text-anchor="end">mcp.py · tools/policy.py · confirm.py · sandbox.py · redact.py</text>
+  <rect x="64" y="244" width="224" height="338" rx="16" fill="url(#card)" stroke="#b1b8c2" stroke-opacity="0.18"/>
+  <rect x="80" y="244.5" width="192" height="1" fill="url(#rim)"/>
+  <g transform="translate(82 260) scale(0.833333)" stroke="#cfd5dc" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l2-8h12l2 8M4 13v6h16v-6M4 13h5l1 2h4l1-2h5"/></g>
+  <text x="114" y="277" class="name">Where it starts</text>
+  <circle cx="86" cy="311.5" r="3.5" fill="#6dcaf8"/>
+  <text x="100" y="316" class="smallb" style="fill:#e6eaf0">voice</text>
+  <text x="100" y="334" class="muted">you, aloud</text>
+  <circle cx="86" cy="355.5" r="3.5" fill="#6dcaf8"/>
+  <text x="100" y="360" class="smallb" style="fill:#e6eaf0">HUD</text>
+  <text x="100" y="378" class="muted">you, on a screen</text>
+  <circle cx="86" cy="399.5" r="3.5" fill="#ebbd57"/>
+  <text x="100" y="404" class="smallb" style="fill:#e6eaf0">Discord</text>
+  <text x="100" y="422" class="muted">you, from your phone</text>
+  <circle cx="86" cy="443.5" r="3.5" fill="#ebbd57"/>
+  <text x="100" y="448" class="smallb" style="fill:#e6eaf0">jobs</text>
+  <text x="100" y="466" class="muted">his scheduled tasks</text>
+  <circle cx="86" cy="487.5" r="3.5" fill="#ff5251"/>
+  <text x="100" y="492" class="smallb" style="fill:#e6eaf0">other apps</text>
+  <text x="100" y="510" class="muted">over /mcp, untrusted</text>
+  <path class="ln" d="M82 534L270 534" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="82" y="556" class="muted">Each has its own limits,</text>
+  <text x="82" y="574" class="muted">set only by you.</text>
+  <path class="ln" d="M292 412L328 412" stroke="#6dcaf8" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <rect x="334" y="232" width="542" height="362" rx="16" fill="none" stroke="#6dcaf8" stroke-opacity="0.4" stroke-width="5" filter="url(#glow)"/>
+  <rect x="334" y="232" width="542" height="362" rx="16" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.54"/>
+  <rect x="350" y="232.5" width="510" height="1" fill="url(#rim)"/>
+  <g transform="translate(352 248) scale(0.833333)" stroke="#99dbfe" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/></g>
+  <text x="384" y="265" class="name">The hub: the one door every call passes</text>
+  <circle cx="368" cy="309" r="12" fill="#ff5251"/>
+  <text x="368" y="315" class="numbig">1</text>
+  <text x="392" y="314" class="bodyb" style="fill:#ff7e77">Limits of the place</text>
+  <text x="392" y="335" class="small">What a place may never do is refused, and no yes lifts it:</text>
+  <text x="392" y="354" class="small">Discord can't reach the PC's power or its commands.</text>
+  <path class="ln" d="M354 361L856 361" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <circle cx="368" cy="385" r="12" fill="#ff5251"/>
+  <text x="368" y="391" class="numbig">2</text>
+  <text x="392" y="390" class="bodyb" style="fill:#ff7e77">No secret goes out</text>
+  <text x="392" y="411" class="small">A call whose arguments hold a key, a token or a password is</text>
+  <text x="392" y="430" class="small">blocked, however it is written (base64, hex, URL-encoded).</text>
+  <path class="ln" d="M354 437L856 437" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <circle cx="368" cy="461" r="12" fill="#ebbd57"/>
+  <text x="368" y="467" class="numbig">3</text>
+  <text x="392" y="466" class="bodyb" style="fill:#f5d38c">Your yes</text>
+  <text x="392" y="487" class="small">After untrusted content, for anything that changes or sends,</text>
+  <text x="392" y="506" class="small">and where a place asks. HUD, aloud or Discord; no answer is no.</text>
+  <path class="ln" d="M354 513L856 513" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <circle cx="368" cy="537" r="12" fill="#6dcaf8"/>
+  <text x="368" y="543" class="numbig">4</text>
+  <text x="392" y="542" class="bodyb" style="fill:#99dbfe">Everything is recorded</text>
+  <text x="392" y="563" class="small">Calls, questions and answers, refusals and blocks: the activity</text>
+  <text x="392" y="582" class="small">log says who asked and who allowed it, with no secret in it.</text>
+  <path class="ln" d="M880 412L916 412" stroke="#6dcaf8" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-rigel)"/>
+  <rect x="920" y="232" width="338" height="104" rx="16" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="936" y="232.5" width="306" height="1" fill="url(#rim)"/>
+  <text x="938" y="258" class="bodyb">Orion's own tools</text>
+  <text x="938" y="282" class="small">The file tools can't read what the sandbox hides,</text>
+  <text x="938" y="301" class="small">or change his code or what starts programs.</text>
+  <rect x="920" y="350" width="338" height="136" rx="16" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="936" y="350.5" width="306" height="1" fill="url(#rim)"/>
+  <text x="938" y="376" class="bodyb">Commands</text>
+  <text x="938" y="400" class="small">Run in a bubblewrap sandbox: the PC is read-only,</text>
+  <text x="938" y="419" class="small">keys and sign-ins are hidden, the environment is</text>
+  <text x="938" y="438" class="small">clean, there is no desktop. The network is open,</text>
+  <text x="938" y="457" class="small">with his own doors shut.</text>
+  <rect x="920" y="500" width="338" height="94" rx="16" fill="url(#card)" stroke="#6dcaf8" stroke-opacity="0.34"/>
+  <rect x="936" y="500.5" width="306" height="1" fill="url(#rim)"/>
+  <text x="938" y="526" class="bodyb">Connectors</text>
+  <text x="938" y="548" class="small">Each gets an environment of its own and only</text>
+  <text x="938" y="567" class="small">its own secrets; one nobody reviewed runs in</text>
+  <text x="938" y="586" class="small">the sandbox too.</text>
+  <path class="ln" d="M1262 284L1296 284" stroke="#ebbd57" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-dusk)"/>
+  <path class="ln" d="M1262 418L1296 418" stroke="#ebbd57" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-dusk)"/>
+  <path class="ln" d="M1262 547L1296 547" stroke="#ebbd57" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-dusk)"/>
+  <rect x="1300" y="232" width="236" height="362" rx="16" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.44"/>
+  <rect x="1316" y="232.5" width="204" height="1" fill="url(#rim)"/>
+  <text x="1318" y="266" class="name">Then the answer</text>
+  <text x="1318" y="294" class="small">Every result passes the</text>
+  <text x="1318" y="313" class="small">redactor before anyone</text>
+  <text x="1318" y="332" class="small">reads it:</text>
+  <circle cx="1322" cy="357.5" r="3.5" fill="#ebbd57"/>
+  <text x="1336" y="362" class="small" style="fill:#e6eaf0">the model</text>
+  <circle cx="1322" cy="381.5" r="3.5" fill="#ebbd57"/>
+  <text x="1336" y="386" class="small" style="fill:#e6eaf0">the HUD</text>
+  <circle cx="1322" cy="405.5" r="3.5" fill="#ebbd57"/>
+  <text x="1336" y="410" class="small" style="fill:#e6eaf0">Discord</text>
+  <circle cx="1322" cy="429.5" r="3.5" fill="#ebbd57"/>
+  <text x="1336" y="434" class="small" style="fill:#e6eaf0">logs and memory</text>
+  <path class="ln" d="M1318 464L1518 464" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="1318" y="488" class="muted">A secret is cut out of</text>
+  <text x="1318" y="507" class="muted">all of it: see below.</text>
+  <path class="ln" d="M64 614L1536 614" stroke="#b1b8c2" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="64" y="636" class="small" style="fill:#b1b8c2"><tspan class="cm">safety.channels</tspan> what each place may never do, and what it always asks about</text>
+  <text x="816" y="636" class="small" style="fill:#b1b8c2"><tspan class="cm">safety.sandbox_*</tspan> what commands can write, what is hidden from them, their network</text>
+
+  <!-- secrets -->
+  <rect x="40" y="674" width="1520" height="274" rx="22" fill="url(#panel)" stroke="#b1b8c2" stroke-opacity="0.15"/>
+  <rect x="62" y="674.5" width="1476" height="1" fill="url(#rim)"/>
+  <circle cx="68" cy="705.5" r="4" fill="#ebbd57"/>
+  <text x="80" y="710" class="colhead" style="fill:#f5d38c">SECRETS: WHERE THEY LIVE, AND WHERE THEY ARE CUT OUT</text>
+  <text x="1536" y="710" class="tag" style="fill:#8f98a3" text-anchor="end">secrets.py · vaulting.py · redact.py</text>
+  <rect x="64" y="736" width="372" height="188" rx="16" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.34"/>
+  <rect x="80" y="736.5" width="340" height="1" fill="url(#rim)"/>
+  <g transform="translate(82 752) scale(0.833333)" stroke="#f5d38c" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4"/><path d="M10.5 12.5L20 3M16.5 6.5l2.5 2.5M14 9l2 2"/></g>
+  <text x="114" y="769" class="name">The vault</text>
+  <text x="82" y="798" class="small">The desktop's keyring, or private files in a</text>
+  <text x="82" y="817" class="small">container. config.yaml keeps only a reference,</text>
+  <text x="82" y="836" class="small">${secret:NAME}: the value is never in it.</text>
+  <text x="82" y="855" class="small">orion secret set NAME asks for it hidden,</text>
+  <text x="82" y="874" class="small">never as an argument.</text>
+  <path class="ln" d="M440 830L476 830" stroke="#ebbd57" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-dusk)"/>
+  <rect x="480" y="736" width="420" height="188" rx="16" fill="none" stroke="#ebbd57" stroke-opacity="0.3" stroke-width="5" filter="url(#glow)"/>
+  <rect x="480" y="736" width="420" height="188" rx="16" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.44"/>
+  <rect x="496" y="736.5" width="388" height="1" fill="url(#rim)"/>
+  <g transform="translate(498 752) scale(0.833333)" stroke="#f5d38c" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.5"/><path d="M4 4l16 16"/></g>
+  <text x="530" y="769" class="name">The redactor</text>
+  <text x="498" y="798" class="small">It knows every secret in the vault, and each as it</text>
+  <text x="498" y="817" class="small">can be disguised (base64, hex, URL, JSON), and the</text>
+  <text x="498" y="836" class="small">shape of 30 kinds of token: keys, JWTs, private</text>
+  <text x="498" y="855" class="small">keys, bot tokens. One automaton: 0.14 ms for</text>
+  <text x="498" y="874" class="small">100 KB of text.</text>
+  <path class="ln" d="M904 830L940 830" stroke="#ebbd57" stroke-width="2" stroke-opacity="0.90" marker-end="url(#ah-dusk)"/>
+  <rect x="944" y="736" width="592" height="188" rx="16" fill="url(#card)" stroke="#ebbd57" stroke-opacity="0.34"/>
+  <rect x="960" y="736.5" width="560" height="1" fill="url(#rim)"/>
+  <text x="962" y="769" class="name">Cut out of everything he shows or keeps</text>
+  <circle cx="966" cy="801.5" r="3.5" fill="#ebbd57"/>
+  <text x="980" y="806" class="small" style="fill:#e6eaf0">what the model reads</text>
+  <circle cx="966" cy="827.5" r="3.5" fill="#ebbd57"/>
+  <text x="980" y="832" class="small" style="fill:#e6eaf0">what the model says</text>
+  <circle cx="966" cy="853.5" r="3.5" fill="#ebbd57"/>
+  <text x="980" y="858" class="small" style="fill:#e6eaf0">tool results and errors</text>
+  <circle cx="966" cy="879.5" r="3.5" fill="#ebbd57"/>
+  <text x="980" y="884" class="small" style="fill:#e6eaf0">what you say or type</text>
+  <circle cx="966" cy="905.5" r="3.5" fill="#ebbd57"/>
+  <text x="980" y="910" class="small" style="fill:#e6eaf0">the HUD's events</text>
+  <circle cx="1256" cy="801.5" r="3.5" fill="#ebbd57"/>
+  <text x="1270" y="806" class="small" style="fill:#e6eaf0">Discord messages</text>
+  <circle cx="1256" cy="827.5" r="3.5" fill="#ebbd57"/>
+  <text x="1270" y="832" class="small" style="fill:#e6eaf0">logs and tracebacks</text>
+  <circle cx="1256" cy="853.5" r="3.5" fill="#ebbd57"/>
+  <text x="1270" y="858" class="small" style="fill:#e6eaf0">memory and its journal</text>
+  <circle cx="1256" cy="879.5" r="3.5" fill="#ebbd57"/>
+  <text x="1270" y="884" class="small" style="fill:#e6eaf0">the activity log</text>
+  <circle cx="1256" cy="905.5" r="3.5" fill="#ebbd57"/>
+  <text x="1270" y="910" class="small" style="fill:#e6eaf0">benchmark replays</text>
+
+  <!-- limits only you can lift -->
+  <circle cx="44" cy="982.5" r="4" fill="#67d283"/>
+  <text x="56" y="987" class="colhead" style="fill:#94dfa4">LIMITS ONLY YOU CAN LIFT</text>
+  <rect x="40" y="1010" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="56" y="1010.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(58 1026) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></g>
+  <text x="88" y="1042" class="bodyb">Channel limits</text>
+  <text x="58" y="1070" class="small">Discord, jobs and other apps each have things</text>
+  <text x="58" y="1089" class="small">they may never do, even with your yes: power,</text>
+  <text x="58" y="1108" class="small">commands, settings, the models. Only you</text>
+  <text x="58" y="1127" class="small">change them, in the HUD or config.yaml.</text>
+  <rect x="425" y="1010" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="441" y="1010.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(443 1026) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5v5M15 2.5v5"/><path d="M6 7.5h12v4a6 6 0 0 1-12 0z"/><path d="M12 17.5v4"/></g>
+  <text x="473" y="1042" class="bodyb">Installs ask you</text>
+  <text x="443" y="1070" class="small">He adds, changes or removes a connector or a</text>
+  <text x="443" y="1089" class="small">plugin only with your yes, asked where you spoke;</text>
+  <text x="443" y="1108" class="small">never from Discord or a job. Whether one runs</text>
+  <text x="443" y="1127" class="small">in the sandbox is yours alone.</text>
+  <rect x="810" y="1010" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="826" y="1010.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(828 1026) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="10" rx="5"/><circle cx="8" cy="12" r="2.6"/></g>
+  <text x="858" y="1042" class="bodyb">Off, never on</text>
+  <text x="828" y="1070" class="small">He can switch a tool or a connector off, never</text>
+  <text x="828" y="1089" class="small">back on. Only you can, in Customize. The</text>
+  <text x="828" y="1108" class="small">browser's code-running tools start switched off.</text>
+  <rect x="1195" y="1010" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="1211" y="1010.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(1213 1026) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4"/><path d="M10.5 12.5L20 3M16.5 6.5l2.5 2.5M14 9l2 2"/></g>
+  <text x="1243" y="1042" class="bodyb">Safety and secrets</text>
+  <text x="1213" y="1070" class="small">He reads safety.* but never changes it, nor</text>
+  <text x="1213" y="1089" class="small">secrets, plugins, prompts, paths or tokens.</text>
+  <text x="1213" y="1108" class="small">Settings show a secret as set or not set.</text>
+  <rect x="40" y="1158" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="56" y="1158.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(58 1174) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></g>
+  <text x="88" y="1190" class="bodyb">He can't answer for you</text>
+  <text x="58" y="1218" class="small">Every yes comes from your side (a HUD, your</text>
+  <text x="58" y="1237" class="small">voice, Discord), never from a tool call.</text>
+  <rect x="425" y="1158" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="441" y="1158.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(443 1174) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></g>
+  <text x="473" y="1190" class="bodyb">This PC alone, by default</text>
+  <text x="443" y="1218" class="small">The HUD listens on 127.0.0.1 and checks Host</text>
+  <text x="443" y="1237" class="small">and Origin; other devices pair with a code.</text>
+  <text x="443" y="1256" class="small">No other site, no DNS rebinding, no framing.</text>
+  <rect x="810" y="1158" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="826" y="1158.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(828 1174) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M7 10l3 2.5L7 15M12.5 15.5h4.5"/></g>
+  <text x="858" y="1190" class="bodyb">Other apps are untrusted</text>
+  <text x="828" y="1218" class="small">Calls through /mcp count as app: they can't</text>
+  <text x="828" y="1237" class="small">leave the sandbox or change connectors, and</text>
+  <text x="828" y="1256" class="small">what they save goes to unverified.md.</text>
+  <rect x="1195" y="1158" width="365" height="130" rx="16" fill="url(#card)" stroke="#67d283" stroke-opacity="0.27"/>
+  <rect x="1211" y="1158.5" width="333" height="1" fill="url(#rim)"/>
+  <g transform="translate(1213 1174) scale(0.833333)" stroke="#94dfa4" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></g>
+  <text x="1243" y="1190" class="bodyb">What he did is on record</text>
+  <text x="1213" y="1218" class="small">The Activity page lists each call, question,</text>
+  <text x="1213" y="1237" class="small">answer, refusal and block, and who asked or</text>
+  <text x="1213" y="1256" class="small">allowed it: titles and outcomes, no secret.</text>
+
+  <!-- footer -->
+  <path class="ln" d="M48 1312L1552 1312" stroke="#b1b8c2" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="48" y="1338" class="foot">ORION  ·  2026-10-12</text>
+  <circle cx="1006" cy="1333.5" r="5" fill="#ff5251"/>
+  <text x="1016" y="1338" class="legend">refused or blocked</text>
+  <circle cx="1176.5" cy="1333.5" r="5" fill="#ebbd57"/>
+  <text x="1186.5" y="1338" class="legend">asks you, or cut out</text>
+  <circle cx="1341.4" cy="1333.5" r="5" fill="#67d283"/>
+  <text x="1351.4" y="1338" class="legend">allowed, yours</text>
+  <circle cx="1495.3" cy="1333.5" r="5" fill="#6dcaf8"/>
+  <text x="1505.3" y="1338" class="legend">Orion</text>
+</svg>

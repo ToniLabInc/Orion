@@ -1,0 +1,20 @@
+# The image's build context, as an allow-list: only what the image needs is sent to Docker, so nothing personal
+# (data/ with your settings, keys, memory and logs; .venv/; .git/) can slip in, however the folder grows.
+*
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!orion/
+!docker/
+# The four starter skills that ship with Orion (tracked in git), and none of the skills you or he made.
+!data/skills/deep-research/
+!data/skills/morning-briefing/
+!data/skills/pc-checkup/
+!data/skills/play-music/
+
+# Never, even inside the folders above.
+**/__pycache__
+**/*.py[codz]
+**/.pytest_cache
+**/.ruff_cache

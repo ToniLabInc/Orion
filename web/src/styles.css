@@ -1,0 +1,261 @@
+/*
+ * The HUD's styles: Tailwind 4 and the palette (palette.css holds every colour), the type scale, the radii, the
+ * shadows and the few utilities everything is built from: `glass` (a card over the living scene), `hairline`, `caps`
+ * (small capitals) and the focus ring. Durations come from lib/motion.ts, which writes them on <html> as --dur-*
+ * variables: transitions read duration-(--dur-quick). What animates forever is opacity or a transform only (the
+ * compositor's work), never a paint, and nothing at all at rest.
+ */
+@import "tailwindcss" source("."); /* classes come from src only: not the READMEs, nor the generated class tables */
+@import "./palette.css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@source not "./lib/cn-tables.ts"; /* (cn's tables of class names, generated: not markup) */
+
+@theme {
+  /* the layouts: a phone below tab (700px), a tablet below desk (1100px), then the desktop; wide for ultrawide */
+  --breakpoint-tab: 43.75rem;
+  --breakpoint-desk: 68.75rem;
+  --breakpoint-wide: 100rem;
+
+  /* Geist for the interface, Geist Mono for machine values, Instrument Serif for his voice and the big numerals */
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+
+  /* The type scale (px / line-height): micro 11/14 … display 96/92. Nothing under 11 px and no arbitrary sizes.
+     lib/cn-tables.ts is compiled from these names (npm run tables), so cn() treats them as sizes. */
+  --text-*: initial;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 0.875rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.125rem;
+  --text-base: 0.90625rem;
+  --text-base--line-height: 1.3125rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.5rem;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.625rem;
+  --text-lg--letter-spacing: -0.005em;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.875rem;
+  --text-xl--letter-spacing: -0.012em;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 2.25rem;
+  --text-2xl--letter-spacing: -0.018em;
+  --text-3xl: 2.75rem;
+  --text-3xl--line-height: 3rem;
+  --text-3xl--letter-spacing: -0.022em;
+  --text-4xl: 4rem;
+  --text-4xl--line-height: 4rem;
+  --text-4xl--letter-spacing: -0.026em;
+  --text-display: 6rem;
+  --text-display--line-height: 5.75rem;
+  --text-display--letter-spacing: -0.03em;
+
+  /* radii: chips, controls (inputs, buttons), menus, cards, sheets */
+  --radius-*: initial;
+  --radius-chip: 6px;
+  --radius-control: 10px;
+  --radius-menu: 14px;
+  --radius-card: 20px;
+  --radius-sheet: 28px;
+
+  --shadow-elevated: 0 30px 80px -24px oklch(0 0 0 / 0.65);
+  --shadow-float: 0 18px 48px -18px oklch(0 0 0 / 0.7);
+
+  /* the curves of lib/motion.ts (the source, which writes them on <html> at boot); these hold until it runs */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* the caret of an answer still arriving: a soft breath, not a blink */
+  --animate-caret: caret 1.15s ease-in-out infinite;
+  /* something running, breathing (opacity: the compositor's work) */
+  --animate-breathe: breathe 1.8s ease-in-out infinite;
+  /* a skeleton's shimmer, only while something loads */
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes caret {
+    0%,
+    100% {
+      opacity: 0.25;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes breathe {
+    50% {
+      opacity: 0.5;
+    }
+  }
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+}
+
+:root {
+  color-scheme: dark;
+  /* a hairline: 1 px of steel at 12 %, with a brighter top edge on glass */
+  --hairline: color-mix(in oklch, var(--color-steel-300) 12%, transparent);
+  --hairline-strong: color-mix(in oklch, var(--color-steel-300) 20%, transparent);
+  --highlight: color-mix(in oklch, var(--color-steel-50) 7%, transparent);
+  /* the glass's own tint: the sky shows through it, blurred */
+  --glass: color-mix(in oklch, var(--color-void-850) 58%, transparent);
+  --glass-solid: color-mix(in oklch, var(--color-void-850) 88%, transparent);
+  /* the top bar, for layouts that measure round it */
+  --bar-h: 3.5rem;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  /* the world under the composer: the stage leaves this much of the night side below the line under it (the limb
+     itself runs through the talk button: lib/core.ts, useHorizon) */
+  --world: clamp(1rem, 7dvh, 5.5rem);
+}
+
+/* a transient card's time running out along its top edge */
+@keyframes card-time {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* His state's tint (palette.css sets it from <html data-state>). It changes at once: a cross-fade would repaint every
+   tinted surface for every frame of it. */
+@property --state {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(0.8 0.11 232);
+}
+
+/* Glass: a translucent card over the sky, which it blurs. Flat glass (data-flat) is its tint alone: in a list that fades
+   out (a mask), a blur would find nothing behind it. */
+@utility glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass);
+  border-radius: var(--radius-card);
+  box-shadow:
+    var(--shadow-elevated),
+    inset 0 1px 0 0 var(--highlight),
+    inset 0 0 0 1px var(--hairline);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  &[data-flat] {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Glass for what floats over everything (menus, dialogs, the palette): denser, so text over moving light, and the page
+   under it, stay out of the way. */
+@utility glass-solid {
+  @apply glass;
+  background: var(--glass-solid);
+}
+
+/* A 1 px line in the hairline colour on one side (or all round: hairline). */
+@utility hairline {
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+@utility hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+@utility hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Small capitals for kickers and labels: 11 px, tracked, a little bold. */
+@utility caps {
+  font-size: var(--text-micro);
+  line-height: var(--text-micro--line-height);
+  font-weight: 560;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+}
+
+/* No scrollbar (a strip of chips) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* A mask that fades the top of a scrolling list into the scene (older messages fade upward). */
+@utility fade-top {
+  mask-image: linear-gradient(to bottom, transparent, black var(--fade, 4rem));
+}
+
+@layer base {
+  * {
+    border-color: var(--hairline);
+  }
+  html {
+    background: var(--color-void-950);
+    color: var(--color-steel-100);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    min-height: 100dvh;
+    overscroll-behavior: none;
+    /* the night under Horizon's sky (the engine draws over it): deepening to the top, as a sky does */
+    background: linear-gradient(to bottom, var(--color-black), var(--color-void-950) 55%, var(--color-void-900));
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--color-rigel-400) 34%, transparent);
+    color: var(--color-white);
+  }
+  /* one focus ring everywhere: 2 px of Rigel, 2 px off the element */
+  :focus-visible {
+    outline: 2px solid var(--color-rigel-400);
+    outline-offset: 2px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--color-steel-400) 28%, transparent) transparent;
+  }
+  button,
+  [role="button"] {
+    cursor: default;
+  }
+  /* figures line up */
+  .tabular,
+  time,
+  output {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Nothing animates in a hidden tab. */
+:root[data-hidden] *,
+:root[data-hidden] *::before,
+:root[data-hidden] *::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
