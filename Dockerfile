@@ -13,7 +13,7 @@
 
 ARG PYTHON_IMAGE=python:3.12-slim-trixie
 
-FROM ghcr.io/astral-sh/uv:0.12.19 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.6 AS uv
 
 # ---------------------------------------------------------------------------------------------------- the venv
 FROM ${PYTHON_IMAGE} AS build
