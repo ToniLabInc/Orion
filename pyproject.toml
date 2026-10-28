@@ -7,55 +7,55 @@ requires-python = ">=3.12,<3.14"
 license = "MIT"
 dependencies = [
     # brain
-    "numpy>=2.0",
+    "numpy>=2.5.4",
     # memory search and tool routing: static embeddings in-process (no Ollama needed unless he thinks locally)
-    "model2vec>=0.9.0",
+    "model2vec>=0.10.0",
     # voice
     "sounddevice>=0.5",
     # 1.2.x: the voice detector runs the Silero VAD model this version ships (faster_whisper/assets/silero_vad_v6.onnx)
     "faster-whisper>=1.2.1,<1.3",
     # CTranslate2 4 runs Whisper on the GPU with cuBLAS alone (no cuDNN: 1.2 GB saved); 5 may need it again
-    "ctranslate2>=4.6,<5",
-    "huggingface-hub>=1.0",
-    "filelock>=3.13",  # the memory lock, shared with the tools process (also what huggingface-hub uses)
-    "tzlocal>=5.0",  # this PC's time zone (also what dateparser uses)
+    "ctranslate2>=4.8.3,<5",
+    "huggingface-hub>=2.3.0",
+    "filelock>=4.2.4",  # the memory lock, shared with the tools process (also what huggingface-hub uses)
+    "tzlocal>=5.4.5",  # this PC's time zone (also what dateparser uses)
     # CUDA's cuBLAS so speech recognition can run on an NVIDIA GPU (installed on any x86-64 Linux; unused without one)
     "nvidia-cublas-cu12; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "kokoro-onnx>=0.6",
-    "onnxruntime>=1.20",
+    "onnxruntime>=1.31.0",
     # server / HUD
-    "fastapi>=0.141",
+    "fastapi>=0.162.0",
     "python-multipart>=0.0.20",  # Customize's uploads (a plugin's .zip, a skill's): FastAPI reads multipart with it
     "uvicorn>=0.54",
-    "websockets>=17.1",
-    "httptools>=0.8",
+    "websockets>=17.3",
+    "httptools>=0.9.0",
     "watchfiles>=1.3",
-    "pydantic>=2.13",
+    "pydantic>=2.14.1",
     "click>=8.5",
     # tools
     "psutil>=6.0,<8",
     "nvidia-ml-py>=13.0",
     "httpx>=0.27",
-    "ddgs>=9.0",
-    "trafilatura>=2.0",
+    "ddgs>=9.16.1",
+    "trafilatura>=2.3.1",
     "dateparser>=1.2",
     # media playback and the screen lock over D-Bus (pure Python, MIT)
     "jeepney>=0.9",
     "pyyaml>=6.0",
-    "mcp>=2.2,<3",
+    "mcp>=2.3.0,<3",
     # a benchmark's dry run checks a brain's arguments against each tool's schema, as the tool would (mcp uses it too)
     "jsonschema>=4.25,<5",
     "ruamel-yaml>=0.18",
     # your Claude plan as his brain, through the Claude Code you signed in to (built from source: it uses
     # that `claude` rather than bundling a second 100 MB copy)
-    "claude-agent-sdk>=0.2.163,<0.3",
+    "claude-agent-sdk>=0.2.174,<0.3",
     # images the models look at (the screen, a camera, a browser, an attachment): sized down and compressed first
     "pillow>=13.0",
     # this machine's screen on X11, macOS and Windows (Wayland goes through the desktop's portal), and its clipboard
     "mss>=10.2,<11",
     "pyperclip>=1.11",
     "cronsim>=2.7",
-    "caldav>=3.4,<4",
+    "caldav>=3.6.0,<4",
     "icalendar>=7",
     "recurring-ical-events>=3.8",
     "x-wr-timezone>=2",
@@ -69,9 +69,9 @@ dependencies = [
     "hassil>=3.12,<4",
     "home-assistant-intents>=2026.10.6",
     # WebRTC's echo canceller (LiveKit's audio processing module), so he can be interrupted on the PC's own speakers
-    "livekit>=1.1.20,<2",
+    "livekit>=1.1.21,<2",
     # your documents: PDF, Word, PowerPoint and Excel as Markdown (MIT), converted in a worker process
-    "markitdown[pdf,docx,pptx,xlsx]>=0.1.8,<0.2",
+    "markitdown[pdf,docx,pptx,xlsx]>=0.1.9,<0.2",
 ]
 
 [project.urls]
